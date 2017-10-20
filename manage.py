@@ -8,14 +8,14 @@ if os.path.exists('.env'):
             os.environ[var[0]] = var[1]
 
 from app import create_app
-from flask.ext.script import Manager
+from flask_script import Manager
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 from app import db
 from app.models import User
 
 from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.migrate import Migrate, MigrateCommand
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate, MigrateCommand
 migrate = Migrate(app, db)
 manager = Manager(app)
 

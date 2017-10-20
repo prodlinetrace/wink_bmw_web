@@ -1,11 +1,11 @@
 from flask import Flask, jsonify, abort, request, make_response, url_for, render_template
 import json
 from flask import render_template, flash, redirect, url_for, abort, request, current_app
-from flask.ext.login import login_required, current_user
+from flask_login import login_required, current_user
 from .. import db, auto, cfg
 from ..models import *
 from . import api as rest
-from flask.ext.autodoc import Autodoc
+from flask_autodoc import Autodoc
 import logging
 import six
 from sqlalchemy.exc import IntegrityError

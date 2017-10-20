@@ -1,12 +1,12 @@
 import six
 from flask import Flask, g, request, session
-from flask.ext.bootstrap import Bootstrap
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.login import LoginManager, current_user
-from flask.ext.moment import Moment
-from flask.ext.pagedown import PageDown
-from flask.ext.autodoc import Autodoc
-from flask.ext.babel import Babel
+from flask_bootstrap import Bootstrap
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, current_user
+from flask_moment import Moment
+from flask_pagedown import PageDown
+from flask_autodoc import Autodoc
+from flask_babel import Babel
 from config import config
 
 __version__ = config['default'].VERSION

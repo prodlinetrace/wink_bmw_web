@@ -5,9 +5,9 @@ except ImportError:
 import csv
 import six
 from flask import render_template, flash, redirect, url_for, abort, request, current_app, make_response
-from flask.ext.login import login_required, current_user
-from flask.ext.babel import gettext
-from flask.ext.paginate import Pagination
+from flask_login import login_required, current_user
+from flask_babel import gettext
+from flask_paginate import Pagination
 from .. import db, babel, cfg
 from ..models import *
 from . import products

@@ -1,9 +1,9 @@
-from flask.ext.wtf import Form
+from flask_wtf import FlaskForm as Form
 from wtforms import StringField, TextAreaField, BooleanField, SubmitField, PasswordField, SelectField, HiddenField
 from wtforms.fields.html5 import DateField
 from wtforms.validators import Optional, Length, Required, EqualTo
-from flask.ext.pagedown.fields import PageDownField
-from flask.ext.babel import gettext, lazy_gettext
+from flask_pagedown.fields import PageDownField
+from flask_babel import gettext, lazy_gettext
 from .. import cfg
 languages = cfg['default'].LANGUAGES
 

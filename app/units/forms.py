@@ -1,7 +1,7 @@
-from flask.ext.wtf import Form
+from flask_wtf import FlaskForm as Form
 from wtforms import StringField, SubmitField, IntegerField
 from wtforms.validators import Optional, Length, Required, InputRequired
-from flask.ext.babel import gettext, lazy_gettext
+from flask_babel import gettext, lazy_gettext
 
 
 class UnitForm(Form):

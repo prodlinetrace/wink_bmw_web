@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, abort, request, current_app
-from flask.ext.login import login_required, current_user
-from flask.ext.babel import gettext
+from flask_login import login_required, current_user
+from flask_babel import gettext
 from .. import db
 from ..models import Program
 from . import programs

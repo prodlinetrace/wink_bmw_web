@@ -1,11 +1,11 @@
 from flask import jsonify, g, flash
-from flask.ext.babel import gettext
+from flask_babel import gettext
 from .. import db
 from ..models import Product, Status, Operation, Comment
 
 from . import webapi
 from .errors import forbidden, bad_request
-from flask.ext.babel import gettext
+from flask_babel import gettext
 
 @webapi.route('/products/<id>', methods=['DELETE'])
 def delete_product(id):

@@ -4,7 +4,7 @@ from ..models import Comment
 
 from . import webapi
 from .errors import forbidden, bad_request
-from flask.ext.babel import gettext
+from flask_babel import gettext
 
 @webapi.route('/comments/<int:id>', methods=['DELETE'])
 def delete_comment(id):

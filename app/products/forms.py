@@ -1,9 +1,9 @@
-from flask.ext.wtf import Form
+from flask_wtf import FlaskForm as Form
 from wtforms import SubmitField, IntegerField, SelectField, StringField, BooleanField
 from wtforms.fields.html5 import DateTimeField, DateField
 from wtforms.validators import Required, NumberRange, InputRequired, Length
-from flask.ext.pagedown.fields import PageDownField
-from flask.ext.babel import gettext, lazy_gettext
+from flask_pagedown.fields import PageDownField
+from flask_babel import gettext, lazy_gettext
 #from wtforms.fields.simple import 
 
 

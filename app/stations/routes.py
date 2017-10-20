@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, abort, request, current_app
-from flask.ext.login import login_required, current_user
-from flask.ext.babel import gettext
-from flask.ext.paginate import Pagination
+from flask_login import login_required, current_user
+from flask_babel import gettext
+from flask_paginate import Pagination
 from .. import db
 from ..models import Station
 from . import stations

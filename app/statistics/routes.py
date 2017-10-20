@@ -1,5 +1,5 @@
 from flask import render_template, flash, redirect, url_for, abort, request, current_app
-from flask.ext.babel import gettext
+from flask_babel import gettext
 from .. import db
 from ..models import Product, Status, Operation, Operation_Type, Operation_Status, Station, Unit, Comment, User
 from . import statistics

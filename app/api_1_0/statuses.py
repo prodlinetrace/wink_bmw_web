@@ -4,7 +4,7 @@ from ..models import Status
 
 from . import webapi
 from .errors import forbidden, bad_request
-from flask.ext.babel import gettext
+from flask_babel import gettext
 
 @webapi.route('/statuses/<int:id>', methods=['DELETE'])
 def delete_status(id):
