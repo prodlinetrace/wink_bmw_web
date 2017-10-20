@@ -1,0 +1,12 @@
+<tr>
+	<td class="right"><a href="{{ url_for('operation_types.edit', id=operation_type.id) }}">{{ operation_type.id }}</a></td>
+	<td><a href="{{ url_for('operation_types.operation_type', id=operation_type.id) }}">{{ operation_type.name }}</a></td>
+	<td>{{ operation_type.description }}</td>
+	<td class="right">{{ operation_type.operations.count() }}</td>
+	<td>
+	    {% if current_user.is_admin  %}
+	    <a class="btn btn-danger pull-right" href="{{ url_for('operation_types.delete', id=operation_type.id) }}">{{ _('Delete') }}</a>
+	    <a class="btn btn-primary pull-right" href="{{ url_for('operation_types.edit', id=operation_type.id) }}">{{ _('Edit') }}</a>
+	    {% endif %}
+	</td>
+</tr>

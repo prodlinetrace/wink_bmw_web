@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>{{ _('Find Product') }}</h1>
+</div>
+<h3>{{ _('Hand Scanner Search') }}</h3>
+<form class="form" method="post" role="form" action="javascript:void(0);">
+	{{ wtf.form_errors(hand_scanner_search_form) }}
+	{{ wtf.form_field(hand_scanner_search_form.product) }}
+	{{ wtf.form_field(hand_scanner_search_form.new_window) }}
+	{{ hand_scanner_search_form.csrf_token() }}
+	{{ wtf.form_field(hand_scanner_search_form.submit) }}
+</form>
+<br/>
+
+<h3>{{ _('Basic Product Search') }}</h3>
+ <form class="form" method="post" role="form">
+	{{ wtf.form_errors(basic_search_form) }}
+	{{ wtf.form_field(basic_search_form.type) }}
+	{{ wtf.form_field(basic_search_form.serial) }}
+	{{ basic_search_form.csrf_token() }}
+	{{ wtf.form_field(basic_search_form.submit) }}
+ </form>
+
+<br/>
+<h3>{{ _('Detailed Product Search') }}</h3>
+<form class="form" method="post" role="form">
+	{{ wtf.form_errors(detailed_search_form) }}
+	<div class="input-daterange input-group" id="datepicker">
+		{{ wtf.form_field(detailed_search_form.start) }}
+		{{ wtf.form_field(detailed_search_form.end) }}
+	</div>		
+	{{ wtf.form_field(detailed_search_form.status_failed) }}
+	{{ wtf.form_field(detailed_search_form.operation_failed) }}
+	{{ detailed_search_form.csrf_token() }}
+	{{ wtf.form_field(detailed_search_form.submit) }}
+</form>
+
+{% endblock %}
+
+{% block scripts %}
+	{{ super() }}
+	<link rel="stylesheet" href="{{ url_for('static', filename='jquery-ui.css') }}" />
+	<script src="{{ url_for('static', filename='jquery-ui.js') }}"></script>
+	<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-datepicker3.standalone.css') }}" />
+	<script src="{{ url_for('static', filename='bootstrap-datepicker.js') }}"></script>
+
+	<script type="text/javascript">
+
+		$(' .input-daterange').datepicker({
+		    todayBtn: "linked",
+		    format: "yyyy-mm-dd",
+		    multidate: "yes",
+		    autoclose: true,
+		    calendarWeeks: true,
+		    todayHighlight: true
+		});
+
+		var product_type = $('#type').value;
+
+		$('#type').change(function() {
+			var product_type = this.value;
+			autocomplete_setup(product_type);
+		});
+
+		function autocomplete_setup(product_type) {
+			var cache = {};
+			$( "#serial" ).autocomplete({
+				minLength: 1,
+				source: function( request, response ) {
+					var term = request.term;
+					if ( term in cache ) {
+						response( cache[ term ] );
+						return;
+					}
+					$.getJSON( "/api/autocomplete/" + product_type, request, function( data, status, xhr ) {
+						cache[ term ] = data;
+						response( data );
+					});
+				}
+			});
+		}
+		
+		$("#product_button").click(function() {
+			var product = $('#product').val().replace(/\D{7}/g, "");
+			var new_window = $('#new_window').is(':checked');
+			var url = "/app/product/"+product
+			if ( new_window ) {
+				window.open(url, '_blank');
+				
+			} else {
+				window.location.href = url;
+			}
+		});
+      </script>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}{{ config.NAME }}{{ _(' - Traceability Frontend - ') }} {{ config.VERSION }}{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+<script src="{{ url_for('static', filename='jquery-latest.js') }}"></script>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='theme.blue.css') }}">
+
+
+{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">{{ _('Toggle Navigation') }}</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url_for('products.index') }}">{{ _('Products') }}</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+            	<li><a href="{{ url_for('products.find_product') }}">{{ _('Find') }}</a></li>
+            	<li><a href="{{ url_for('products.export_csv') }}">{{ _('Export') }}</a></li>
+                {% if current_user.is_authenticated %}
+	                	 <li><a href="{{ url_for('stations.index') }}">{{ _('Stations') }}</a></li>
+	                	 <li><a href="{{ url_for('operation_types.index') }}">{{ _('Operations') }}</a></li>
+          	 	      	 <li><a href="{{ url_for('operation_statuses.index') }}">{{ _('Statuses') }}</a></li>
+           	 	      	 <li><a href="{{ url_for('units.index') }}">{{ _('Units') }}</a></li>
+	                {% if current_user.is_admin %}
+	                	 <li><a href="{{ url_for('users.index') }}">{{ _('Users') }}</a></li>
+	                {% endif %}
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if not current_user.is_authenticated %}
+        	        <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                {% else %}
+        	        <li><a href="{{ url_for('users.user', login=current_user.login) }}">{{ _('Profile') }}</a></li>
+                    <li class="dropdown">
+	                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ current_user.name }} {% if current_user.is_admin %} ({{ _('Admin') }}) {% else %} ({{ _('Operator') }}) {% endif %}<b class="caret"></b></a>
+	                    <ul class="dropdown-menu">
+	                        <li><a href="{{ url_for('auth.logout') }}">{{ _('Logout') }}</a></li>
+	                    </ul>
+	                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+
+    {% block page_content %}{% endblock %}
+</div>.
+<div id="footer">
+  {% block footer %}
+  	{{ config.NAME }} v:{{ config.VERSION }} (dbmodel:{{ config.DBMODEL_VERSION }}) <a href="{{ url_for('statistics.index') }}">{{ _('stat') }}</a> &copy; <a href="mailto:Piot.Wilkosz@gmail.com">Piotr Wilkosz</a> 2017.
+  {% endblock %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{% endblock %}
+
+

@@ -1,0 +1,17 @@
+<tr>
+	<td>{{ user.login }}</td>
+	<td><a href="{{ url_for('users.user', login=user.login) | safe}}">{{ user.name }}</a></td>
+	<td>{{ user.bio }}</td>
+	<td>{{ user.is_operator }}</td>
+	<td>{{ user.is_admin }}</td>
+	<td>
+	    {% if user.login == current_user.login %}
+		    <a class="btn btn-primary pull-right" href="{{ url_for('users.edit', login=user.login) }}">{{ _('Edit') }}</a>
+		    <a class="btn btn-primary pull-right" href="{{ url_for('users.password', login=user.login) }}">{{ _('Password') }}</a>
+	    {% elif current_user.is_admin %}
+		    <a class="btn btn-danger pull-right" href="{{ url_for('users.delete', login=user.login) }}">{{ _('Delete') }}</a>
+		    <a class="btn btn-danger pull-right" href="{{ url_for('users.edit', login=user.login) }}">{{ _('Edit') }}</a>
+		    <a class="btn btn-danger pull-right" href="{{ url_for('users.password', login=user.login) }}">{{ _('Password') }}</a>
+	    {% endif %}
+    </td>
+</tr>

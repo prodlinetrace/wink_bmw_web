@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="page-header status-profile">
+    {% if current_user.is_admin %}<a class="btn btn-default pull-right" href="{{ url_for('statuses.edit', id=status.id) }}">{{ _('Edit') }}</a>{% endif %}
+    <h1>{{ _('Details for') }}: {{ status.name }}</h1>
+    <p>
+    	<ul>
+	    	{% if status.id %}<p>{{ _('Id') }}: {{ status.id }}</p>{% endif %}
+	    	{% if status.status_status.name %}<p>{{ _('Name') }}: {{ status.status_status.name }}</p>{% endif %}
+	    	{% if status.status_status.description %}<p>{{ _('Description') }}: {{ status.status_status.description }}</p>{% endif %}
+    	</ul>
+    </p>
+    
+</div>
+{% endblock %}

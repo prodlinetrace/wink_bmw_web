@@ -1,0 +1,17 @@
+<div class="product-header">
+    {% if current_user.is_admin %}
+        <div id="product-moderate-{{ product.id }}" class="pull-right">
+         	<a class="btn btn-danger api-product-delete" data-id="{{ product.id }}" href="#"><span class="glyphicon glyphicon-trash"></span>{{ _('Delete') }}</a>
+		</div>
+		<div id="product-deleted-{{ product.id }}" class="pull-right" style="display: none;">
+   			<span class="glyphicon glyphicon-trash"></span> <b>{{ _('Deleted') }}</b>
+		</div>
+    	<a class="btn btn-danger pull-right" href="{{ url_for('products.edit_product', id=product.id) }}">{{ _('Edit') }}</a>
+
+    {% endif %}
+    <h2><a href="{{ url_for('products.product', id=product.id) }}">{{ product.type }} {{ product.serial }}</a></h2>
+    <h3>{{ product.description }}</h3>
+    {% if config.COMMENTS %}
+    <div class="pull-right"><a href="{{ url_for('products.product', id=product.id) }}#comments"><span class="label label-default">{{ _('Comments') }}: {{ product.comments.count() }}</span></a></div>
+	{% endif %}
+</div>

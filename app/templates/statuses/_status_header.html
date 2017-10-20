@@ -1,0 +1,14 @@
+<tr>
+	<td>{{ status.id }}</td>
+	<td>{{ status }}</td>
+	<td>
+		{% if current_user.is_admin  %}
+	        <div id="status-moderate-{{ status.id }}" class="pull-right">
+	            <a class="btn btn-danger api-status-delete" data-id="{{ status.id }}" href="#"><span class="glyphicon glyphicon-trash"></span>{{ _('Delete') }}</a>
+   			</div>
+   			<div id="status-deleted-{{ status.id }}" class="pull-right" style="display: none;">
+       			<span class="glyphicon glyphicon-trash"></span> <b>{{ _('Deleted') }}</b>
+   			</div>
+		{% endif %}
+    </td>
+</tr>

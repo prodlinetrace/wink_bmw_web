@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="page-header unit-profile">
+    {% if current_user.is_admin %}<a class="btn btn-default pull-right" href="{{ url_for('units.edit', id=unit.id) }}">{{ _('Edit') }}</a>{% endif %}
+    <h1>{{ _('Details for') }}: {{ unit.name }}</h1>
+    <p>
+    	<ul>
+	    	<p>{{ _('Id') }}: {{ unit.id }}</p>
+	    	<p>{{ _('Name') }}: {{ unit.name }}</p>
+ 	    	<p>{{ _('Symbol') }}: {{ unit.symbol }}</p>
+	    	{% if unit .description %}<p>{{ _('Description') }}: {{ unit.description }}</p>{% endif %}
+    	</ul>
+    </p>
+
+</div>
+{% endblock %}

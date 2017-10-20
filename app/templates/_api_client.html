@@ -1,0 +1,80 @@
+{% if current_user.is_authenticated %}
+<script>
+    var api_token = "{{ current_user.get_api_token() | safe }}";
+    function api(url, method, data, success, error) {
+        if (!data)
+            data = {}
+        data.token = api_token;
+        req_url = location.protocol + '//' + location.host + '/webapi/1.0' + url
+        $.ajax({
+            url: req_url,
+            type: method,
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            success: success,
+            error: error
+        });
+    }
+    $('.api-comment-approve').click(function() {
+        id = $(this).data('id');
+        url = location.protocol + '//' + location.host + '/webapi/1.0/comments/' + id
+        api('/comments/' + id, 'PUT', {}, function() {
+            $('#comment-moderate-' + id).hide();
+            $('#comment-approved-' + id).show();
+        },
+        function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        });
+        return false;
+    });
+    $('.api-comment-delete').click(function() {
+        id = $(this).data('id');
+        url = location.protocol + '//' + location.host + '/webapi/1.0/comments/' + id
+        api('/comments/' + id, 'DELETE', {}, function() {
+            $('#comment-moderate-' + id).hide();
+            $('#comment-deleted-' + id).show();
+        },
+        function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        });
+        return false;
+    });
+    $('.api-operation-delete').click(function() {
+        id = $(this).data('id');
+        url = location.protocol + '//' + location.host + '/webapi/1.0/operations/' + id
+        api('/operations/' + id, 'DELETE', {}, function() {
+            $('#operation-moderate-' + id).hide();
+            $('#operation-deleted-' + id).show();
+        },
+        function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        });
+        return false;
+    });
+    $('.api-status-delete').click(function() {
+        id = $(this).data('id');
+        url = location.protocol + '//' + location.host + '/webapi/1.0/statuses/' + id
+        api('/statuses/' + id, 'DELETE', {}, function() {
+            $('#status-moderate-' + id).hide();
+            $('#status-deleted-' + id).show();
+        },
+        function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        });
+        return false;
+    });
+    $('.api-product-delete').click(function() {
+        id = $(this).data('id');
+        url = location.protocol + '//' + location.host + '/webapi/1.0/products/' + id
+        api('/products/' + id, 'DELETE', {}, function() {
+            $('#product-moderate-' + id).hide();
+            $('#product-deleted-' + id).show();
+        },
+        function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        });
+        return false;
+    });
+
+</script>
+{% endif %}

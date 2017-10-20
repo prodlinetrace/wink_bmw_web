@@ -1,0 +1,16 @@
+<tr>
+	<td class="right"><a href="{{ url_for('stations.edit', id=station.id) }}">{{ station.id }}</a></td>
+	<td class="left"><a href="{{ url_for('stations.station', id=station.id) }}">{{ station.name }}</a></td>
+	<td class="right">{{ station.ip }}</td>
+	<td class="right">{{ station.port }}</td>
+	<td class="right">{{ station.rack }}</td>
+	<td class="right">{{ station.slot }}</td>
+	<td class="right">{{ station.statuses.count() }}</td>
+	<td class="right">{{ station.operations.count() }}</td>
+	<td>
+	    {% if current_user.is_admin %}
+	    <a class="btn btn-danger pull-right" href="{{ url_for('stations.delete', id=station.id) }}">{{ _('Delete') }} </a>
+	    <a class="btn btn-primary pull-right" href="{{ url_for('stations.edit', id=station.id) }}">{{ _('Edit') }} </a>
+	    {% endif %}
+	</td>
+</tr>

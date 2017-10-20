@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="page-header program-profile">
+    {% if current_user.is_admin %}<a class="btn btn-default pull-right" href="{{ url_for('programs.edit', id=program.id) }}">{{ _('Edit') }}</a>{% endif %}
+    <h1>{{ _('Details for') }}: {{ program.name }}</h1>
+    <p>
+    	<ul>
+	    	<p>{{ _('Id') }}: {{ program.id }}</p>
+	    	<p>{{ _('Name') }}: {{ program.name }}</p>
+	    	{% if program .description %}<p>{{ _('Description') }}: {{ program.description }}</p>{% endif %}
+    	</ul>
+    </p>
+
+</div>
+{% endblock %}

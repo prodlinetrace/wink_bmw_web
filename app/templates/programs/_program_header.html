@@ -1,0 +1,11 @@
+<tr>
+	<td class="id right"><a href="{{ url_for('programs.edit', id=program.id) }}">{{ program.id }}</a></td>
+	<td><a href="{{ url_for('programs.program', id=program.id) }}">{{ program.name }}</a></td>
+	<td>{{ program.description }}</td>
+	<td class="extras">
+	    {% if current_user.is_admin  %}
+	    <a class="btn btn-danger pull-right" href="{{ url_for('programs.delete', id=program.id) }}">{{ _('Delete') }}</a>
+	    <a class="btn btn-primary pull-right" href="{{ url_for('programs.edit', id=program.id) }}">{{ _('Edit') }}</a>
+	    {% endif %}
+	</td>
+</tr>

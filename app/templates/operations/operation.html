@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="page-header operation-profile">
+    {% if current_user.is_admin %}<a class="btn btn-default pull-right" href="{{ url_for('operations.edit', id=operation.id) }}">{{ _('Edit') }}</a>{% endif %}
+    <h1>{{ _('Details for') }}: {{ operation.name }}</h1>
+    <p>
+    	<ul>
+	    	{% if operation.id %}<p>{{ _('Id') }}: {{ operation.id }}</p>{% endif %}
+	    	{% if operation.operation_status.name %}<p>{{ _('Name') }}: {{ operation.operation_status.name }}</p>{% endif %}
+	    	{% if operation.operation_status.description %}<p>{{ _('Description') }}: {{ operation.operation_status.description }}</p>{% endif %}
+    	</ul>
+    </p>
+    
+</div>
+{% endblock %}

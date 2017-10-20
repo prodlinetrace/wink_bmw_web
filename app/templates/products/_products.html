@@ -1,0 +1,49 @@
+<table cellspacing="0" id="products" class="tablesorter">
+	<thead>
+		<tr>
+            <th class="id">{{ _('Id') }}</th>
+            <th class="type">{{ _('Type') }}</th>
+            <th class="serial">{{ _('Serial') }}</th>
+            <th class="date">{{ _('Date Added') }}</th>
+            <th class="value">{{ _('Success Statuses') }}</th>
+            <th class="value">{{ _('Failed Statuses') }}</th>
+            <th class="value">{{ _('Success Operations') }}</th>
+            <th class="value">{{ _('Failed Operations') }}</th>
+            {% if config.COMMENTS %}
+            	<th class="value">{{ _('Comments') }}</th>
+            {% endif %}
+            <th class="extras">{{ _('Extras') }}</th>
+       	</tr>
+   	</thead>
+   	<tbody>
+		{% for product in products %}
+		<tr>
+			<td class="right id"><a href="{{ url_for('products.product', id=product.id) }}">{{ product.id }}</a></td>
+			<td class="right type">{{ product.type }}</td>
+			<td class="right serial">{{ product.serial }}</td>
+   			<td class="right date">{{ product.date_added }}</td>
+			<td class="right">{{ product.statuses.filter(Status.status==1).count() }}</td>
+			<td class="right" {% if product.statuses.filter(Status.status==2).count() != 0 %} id="red" {% endif %}>{{ product.statuses.filter(Status.status==2).count() }}</td>
+			<td class="right">{{ product.operations.filter(Operation.operation_status_id==1).count() }}</td>
+			<td class="right" {% if product.operations.filter(Operation.operation_status_id==2).count() != 0 %} id="red" {% endif %}>{{ product.operations.filter(Operation.operation_status_id==2).count() }}</td>
+            {% if config.COMMENTS %}
+	   			<td class="right">
+	   				<div class="pull-right"><a href="{{ url_for('products.product', id=product.id) }}#comments">{{ product.comments.count() }}</a></div>
+	   			</td>
+            {% endif %}
+   			<td class="extras">
+   				{% if current_user.is_admin %}
+			        <div id="product-moderate-{{ product.id }}" class="pull-right">
+			            <a class="btn btn-danger api-product-delete" data-id="{{ product.id }}" href="#"><span class="glyphicon glyphicon-trash"></span>{{ _('Delete') }}</a>
+		   			</div>
+		   			<div id="product-deleted-{{ product.id }}" class="pull-right" style="display: none;">
+		       			<span class="glyphicon glyphicon-trash"></span> <b>{{ _('Deleted') }}</b>
+		   			</div>
+   					<a class="btn btn-danger pull-right" href="{{ url_for('products.edit_product', id=product.id) }}">{{ _('Edit') }}</a>
+   				{% endif %}
+   			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+

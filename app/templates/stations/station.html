@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="page-header station-profile">
+    {% if current_user.is_admin %}<a class="btn btn-default pull-right" href="{{ url_for('stations.edit', id=station.id) }}">{{ _('Edit') }}</a>{% endif %}
+    <h1>{{ _('Details for') }}: {{ station.name }}</h1>
+    <p>
+    	<ul>
+	    	{% if station.id %}<p>{{ _('Id') }}: {{ station.id }}</p>{% endif %}
+	    	{% if station.name %}<p>{{ _('Name') }}: {{ station.name }}</p>{% endif %}
+	    	{% if station.ip %}<p>{{ _('IP Address') }}: {{ station.ip }}</p>{% endif %}
+	    	{% if station.port %}<p>{{ _('Port') }}: {{ station.port }}</p>{% endif %}
+	    	<p>{{ _('Rack') }}: {{ station.rack }}</p>
+	    	<p>{{ _('Slot') }}: {{ station.slot }}</p>
+    	</ul>
+    </p>
+</div>
+{% endblock %}

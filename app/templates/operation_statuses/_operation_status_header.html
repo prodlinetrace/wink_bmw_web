@@ -1,0 +1,16 @@
+<tr>
+	<td class="right"><a href="{{ url_for('operation_statuses.edit', id=operation_status.id) }}">{{ operation_status.id }}</a></td>
+	<td><a href="{{ url_for('operation_statuses.operation_status', id=operation_status.id) }}">{{ operation_status.name }}</a></td>
+	{% if operation_status.unit %}
+	<td><a href="{{ url_for('units.unit', id=operation_status.unit.id) }}">{{ operation_status.unit.name }} [{{ operation_status.unit.symbol }}]</a></td>
+    {% else %}
+	<td>{{ _('undefined value') }}</td>
+	{% endif %}
+	<td>{{ operation_status.description }}</td>
+	<td>
+	    {% if current_user.is_admin  %}
+	    <a class="btn btn-danger pull-right" href="{{ url_for('operation_statuses.delete', id=operation_status.id) }}">{{ _('Delete') }}</a>
+	    <a class="btn btn-primary pull-right" href="{{ url_for('operation_statuses.edit', id=operation_status.id) }}">{{ _('Edit') }}</a>
+	    {% endif %}
+	</td>
+</tr>

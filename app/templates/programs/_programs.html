@@ -1,0 +1,15 @@
+<table cellspacing="0" id="programs" class="programs tablesorter">
+	<thead>
+  		<tr>
+           <th class="id">{{ _('Id') }}</th>
+           <th>{{ _('Name') }}</th>
+           <th>{{ _('Description') }}</th>
+           <th class="extras">{{ _('Extras') }}</th>
+       </tr>
+    </thead>
+    <tbody>
+	{% for program in programs %}
+    		{% include "programs/_program_header.html" %}
+	{% endfor %}
+	</tbody>
+</table>

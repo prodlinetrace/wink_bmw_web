@@ -1,0 +1,19 @@
+<table cellspacing="0" id="users" class="users tablesorter">
+	<thead>
+  		<tr>
+           <th class="id">{{ _('login') }}</th>
+           <th>{{ _('Name') }}</th>
+           <th>{{ _('Bio') }}</th>
+           <th>{{ _('Operator') }}</th>
+           <th>{{ _('Administrator') }}</th>
+           <th style="width:250px">{{ _('Extras') }}</th>
+       </tr>
+    </thead>
+    <tbody>
+		{% for user in users %}
+		    {% include "users/_user_header.html" %}
+		{% endfor %}
+	</tbody>
+</table>
+
+

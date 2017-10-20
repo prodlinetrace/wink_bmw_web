@@ -1,0 +1,22 @@
+<table cellspacing="0" id="stations" class="stations tablesorter">
+	<thead>
+  		<tr>
+           <th class="id">{{ _('Id') }}</th>
+           <th>{{ _('Name') }}</th>
+           <th>{{ _('IP Address') }}</th>
+           <th>{{ _('Port') }}</th>
+           <th>{{ _('Rack') }}</th>
+           <th>{{ _('Slot') }}</th>
+           <th>{{ _('Statuses') }}</th>
+           <th>{{ _('Operations') }}</th>
+           <th class="extras">{{ _('Extras') }}</th>
+       </tr>
+    </thead>
+    <tbody>
+	{% for station in stations %}
+    		{% include "stations/_station_header.html" %}
+	{% endfor %}
+	</tbody>
+</table>
+
+

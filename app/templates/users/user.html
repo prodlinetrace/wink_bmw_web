@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="page-header user-profile">
+    <div class="user-avatar"><img src="{{ user.gravatar(128) }}"></div>
+    {% if current_user == user %}<a class="btn btn-default pull-right" href="{{ url_for('users.profile') }}">{{ _('Edit Profile') }}</a>{% endif %}
+    <h1>{{ user.username }}</h1>
+    <p>
+        {% if user.name %}{{_('Name')}}: {{ user.name }}<br>{% endif %}
+        {% if user.location %}{{_('Location')}}: <a href="http://maps.google.com?q={{ user.location }}">{{ user.location }}</a><br>{% endif %}
+        {% if user.locale %}{{_('Preferred Language')}}: {{ user.locale }}<br>{% endif %}
+        {{_('Operator')}}: {{ user.is_operator }}<br>
+        {{_('Administrator')}}: {{ user.is_admin }}<br>
+    </p>
+    {% if user.bio %}<p>{{ user.bio }}</p>{% endif %}
+</div>
+<ul class="pager">
+	{{ pagination.links }}
+</ul>
+
+	{% if config.COMMENTS %}
+		{% include "products/_comments.html" %}
+		{% if comments %}
+		<ul class="pager">
+			{{ pagination.info }}
+			{{ pagination.links }}
+		</ul>
+		{% endif %}
+	{% endif %}
+{% endblock %}
+
+{% block scripts %}
+	{% include "_api_client.html" %}
+{% endblock %}

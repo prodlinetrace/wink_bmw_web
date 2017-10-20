@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+
+{% if current_user.is_admin %}
+	<a class="btn btn-primary pull-right" href="{{ url_for('users.new') }}">{{ _('New User') }}</a>
+{% endif %}
+
+<ul class="pager">
+	{{ pagination.links }}
+</ul>
+{% include "users/_users.html" %}
+<ul class="pager">
+	{{ pagination.info }}
+	{{ pagination.links }}
+</ul>
+
+{% endblock %}
+{% block scripts %}
+	{{ super() }}
+	{{ pagedown.include_pagedown() }}
+	<script src="/static/jquery.autosize.min.js"></script>
+	<script>
+	    $(document).ready(function() {
+	        $('#flask-pagedown-body').autosize();
+	    });
+	</script>
+	<script type="text/javascript" src="/static/jquery.tablesorter.min.js"></script>
+
+	<script type="text/javascript">
+	$(function() {
+        $("#users")
+        .tablesorter({
+        	theme: 'blue',
+            	sortList: [[0,0]],  // sort by login on load
+        		widgets: ["zebra", "filter"],
+            	widgetOptions: {
+            	      filter_columnFilters: true,
+            	      filter_placeholder: { search : 'Filter...' },
+            	      filter_reset: '.reset'
+              	}
+        });
+
+	});
+	</script>
+	{% include "_api_client.html" %}
+{% endblock %}

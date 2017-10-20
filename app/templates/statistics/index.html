@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<h3>
+{{ _('General Statistics') }}:
+<br/>
+</h3>
+
+<table cellspacing="0" class="tablesorter">
+	<thead>
+  		<tr>
+           <th>{{ _('Parameter') }}</th>
+           <th>{{ _('Value') }}</th>
+       </tr>
+    </thead>
+    <tbody>
+
+		<tr><td> {{ _('Version') }} </td><td> {{ config.VERSION }}</tr></td>
+		<tr><td> {{ _('Model Version') }} </td><td> {{ config.DBMODEL_VERSION }}</tr></td>
+		<tr><td> {{ _('Database file location') }} </td><td> {{ config.SQLALCHEMY_DATABASE_URI }}</tr></td> 
+		<tr><td> {{ _('Mode') }} </td><td> {{ config.MODE }}</tr></td>
+		<tr><td> {{ _('Default Locale') }} </td><td> {{ config.BABEL_DEFAULT_LOCALE }}</tr></td>
+		<tr><td> {{ _('Supported Languages') }} </td><td> {{ config.LANGUAGES }}</tr></td>
+		<tr><td> {{ _('Local Bootstrap') }} </td><td> {{ config.BOOTSTRAP_SERVE_LOCAL }}</tr></td>
+		<tr><td> {{ _('Products per page') }} </td><td> {{ config.PRODUCTS_PER_PAGE }}</tr></td>
+		<tr><td> {{ _('Comments per page') }} </td><td> {{ config.COMMENTS_PER_PAGE }}</tr></td>
+		<tr><td> {{ _('Stations per page') }} </td><td> {{ config.STATIONS_PER_PAGE }}</tr></td>
+		<tr><td> {{ _('Operation types per page') }} </td><td> {{ config.OPERATION_TYPES_PER_PAGE }}</tr></td>
+		<tr><td> {{ _('Operation statuses per page') }} </td><td> {{ config.OPERATION_STATUSES_PER_PAGE }}</tr></td>
+		<tr><td> {{ _('Operations per page') }} </td><td> {{ config.OPERATIONS_PER_PAGE }}</tr></td>
+		<tr><td> {{ _('Statuses per page') }} </td><td> {{ config.STATUSES_PER_PAGE }}</tr></td>
+		<tr><td> {{ _('Users per page') }} </td><td> {{ config.USERS_PER_PAGE }}</tr></td>
+
+	</tbody>
+</table>
+<h3>
+{{ _('Database Statistics') }}:
+<br/>
+</h3>
+<table cellspacing="0" class="tablesorter">
+	<thead>
+  		<tr>
+           <th>{{ _('Name') }}</th>
+           <th>{{ _('Count') }}</th>
+           <th>{{ _('Description') }}</th>
+       </tr>
+    </thead>
+    <tbody>
+		<tr>
+			<td>{{ _('Products') }}</td>
+			<td>{{ products.count() }}</td>
+			<td>{{ _('Number of products in DB') }}</td>
+       	</tr>
+ 		<tr>
+			<td>{{ _('Statuses') }}</td>
+			<td>{{ statuses.count() }}</td>
+			<td>{{ _('Number of statuses in DB') }}</td>
+       	</tr>
+ 		<tr>
+			<td>{{ _('Operations') }}</td>
+			<td>{{ operations.count() }}</td>
+			<td>{{ _('Number of operations in DB') }}</td>
+       	</tr>
+ 		<tr>
+			<td>{{ _('Operation Types') }}</td>
+			<td>{{ operation_types.count() }}</td>
+			<td>{{ _('Number of operation types in DB') }}</td>
+       	</tr>
+ 		<tr>
+			<td>{{ _('Operation Statuses') }}</td>
+			<td>{{ operation_statuses.count() }}</td>
+			<td>{{ _('Number of operation statuses in DB') }}</td>
+       	</tr>
+ 		<tr>
+			<td>{{ _('Stations') }}</td>
+			<td>{{ stations.count() }}</td>
+			<td>{{ _('Number of stations in DB') }}</td>
+       	</tr>
+ 		<tr>
+			<td>{{ _('Units') }}</td>
+			<td>{{ units.count() }}</td>
+			<td>{{ _('Number of units in DB') }}</td>
+       	</tr>
+ 		<tr>
+			<td>{{ _('Comments') }}</td>
+			<td>{{ comments.count() }}</td>
+			<td>{{ _('Number of comments in DB') }}</td>
+       	</tr>
+ 		<tr>
+			<td>{{ _('Users') }}</td>
+			<td>{{ users.count() }}</td>
+			<td>{{ _('Number of users in DB') }}</td>
+       	</tr>
+	</tbody>
+</table>
+
+{% endblock %}

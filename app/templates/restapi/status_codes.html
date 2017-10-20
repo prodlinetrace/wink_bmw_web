@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block body %}
+  {% if session.logged_in %}
+  	{{ _('I\'m logged in as') }}: {{ username }}
+  {% endif %}
+	 	<h3>{{ _('Status Codes') }}:</h3>
+	 	<div>
+	 		<div>
+	    		<p>{{ _('Please') }}Please find the meaning of available status codes:</p>
+	    	</div>
+	    	<div>
+		    	{% for sc in status_codes %}
+		    	<div>{{ _('code') }}: <b>{{ sc }}</b> {{ _('short') }}: <b>{{ status_codes[sc]['result'] }}</b> {{ _('description') }}: <b>{{ status_codes[sc]['desc'] }}</b></div>
+		    	{% endfor %}
+	    	</div>
+	    </div>
+{% endblock %}
+
