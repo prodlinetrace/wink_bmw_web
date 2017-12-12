@@ -69,14 +69,14 @@ def download(start_date=None, end_date=None, status=None, operation=None):
         # include in the list in case one of operations is equal to searched operation_id
         query = query.filter(Product.operations.any(Operation.operation_status_id==operation))
 
-    csv_header = ['Id', 'Type', 'Serial', 'Date Added', 'Success Statuses', 'Failed Statuses', 'Success Operations', 'Failed Operations']
+    csv_header = ['Id', 'Date Added', 'Success Statuses', 'Failed Statuses', 'Success Operations', 'Failed Operations']
     buffer = StringIO()
     writer = csv.writer(buffer, delimiter=',')
     writer.writerow(csv_header)
 
     products = query.order_by(Product.date_added.desc()).all()
     for product in products:
-        row = ["{id}".format(id=product.id), "{type}".format(type=product.type), "{sn}".format(sn=product.serial), " {date}".format(date=product.date_added)]
+        row = ["{id}".format(id=product.id), " {date}".format(date=product.date_added)]
         row.append(product.statuses.filter(Status.status==1).count())
         row.append(product.statuses.filter(Status.status==2).count())
         row.append(product.operations.filter(Operation.operation_status_id==1).count())
@@ -91,20 +91,21 @@ def download(start_date=None, end_date=None, status=None, operation=None):
 
 @products.route('/find_product', methods=['GET', 'POST'])
 def find_product():
+    detailed_search_form = FindProductsRangeForm()
+    basic_search_form = FindProductForm([])
+    hand_scanner_search_form = HandScannerSearchForm()
+    '''
     type_query = db.session.query(Product.type.distinct().label("type"))
     type_choices = [(six.u(row.type), six.u(row.type)) for row in type_query.all()]
     type_choices.insert(0, ("", "Select Product Type"))
-    basic_search_form = FindProductForm(type_choices)
-    detailed_search_form = FindProductsRangeForm()
-    hand_scanner_search_form = HandScannerSearchForm()
 
     if basic_search_form.validate_on_submit():
-        result = Product.query.filter_by(type=basic_search_form.type.data).filter_by(serial=basic_search_form.serial.data).first()
+        result = Product.query.filter_by(id=basic_search_form.type.data).first()
         if result is not None:
-            flash(gettext(u'Product with serial {serial} found.'.format(serial=basic_search_form.serial.data)))
+            flash(gettext(u'Product with id {id} found.'.format(id=basic_search_form.id.data)))
             return redirect(url_for('products.product', id=result.id))
-        flash(gettext(u'Product with serial {serial} not found.'.format(serial=basic_search_form.serial.data)))
-
+        flash(gettext(u'Product with id {id} not found.'.format(id=basic_search_form.id.data)))
+    '''
     if detailed_search_form.validate_on_submit():
         start_date = detailed_search_form.start.data
         end_date = detailed_search_form.end.data
@@ -170,14 +171,14 @@ def export(start_date=None, end_date=None, operation_type_id=None):
     #if operation_type_id and operation_type_id!='':
     #        query = query.filter(Product.operations.any(Operation.operation_type_id==operation_type_id))
 
-    csv_header = ['Id', 'Type', 'Serial', 'Date Added', 'Operation Type Id', 'Operation Name', 'Result 1', 'Result 2']
+    csv_header = ['Id', 'Date Added', 'Operation Type Id', 'Operation Name', 'Result 1', 'Result 2']
     buffer = StringIO()
     writer = csv.writer(buffer, delimiter=',')
     writer.writerow(csv_header)
 
     products = query.order_by(Product.date_added.desc()).all()
     for product in products:
-        row = ["{id}".format(id=product.id), "{type}".format(type=product.type), "{sn}".format(sn=product.serial), " {date}".format(date=product.date_added)]
+        row = ["{id}".format(id=product.id), " {date}".format(date=product.date_added)]
         row.append(operation_type_id)
         row.append((Operation_Type.query.filter_by(id=operation_type_id).first().name).encode("utf-8"))
         if product.operations.filter(Operation.operation_type_id==operation_type_id).count() >0:

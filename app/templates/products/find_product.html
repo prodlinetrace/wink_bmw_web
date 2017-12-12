@@ -18,8 +18,7 @@
 <h3>{{ _('Basic Product Search') }}</h3>
  <form class="form" method="post" role="form">
 	{{ wtf.form_errors(basic_search_form) }}
-	{{ wtf.form_field(basic_search_form.type) }}
-	{{ wtf.form_field(basic_search_form.serial) }}
+	{{ wtf.form_field(basic_search_form.id) }}
 	{{ basic_search_form.csrf_token() }}
 	{{ wtf.form_field(basic_search_form.submit) }}
  </form>

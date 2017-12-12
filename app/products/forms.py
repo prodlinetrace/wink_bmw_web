@@ -8,19 +8,19 @@ from flask_babel import gettext, lazy_gettext
 
 
 class ProductForm(Form):
-    type = StringField(lazy_gettext('Product Type'), validators=[Required(), Length(1, 10)])
-    serial = StringField(lazy_gettext('Serial Number'), validators=[Required(), Length(1, 20)])
+    #type = StringField(lazy_gettext('Product Type'), validators=[Required(), Length(1, 10)])
+    #serial = StringField(lazy_gettext('Serial Number'), validators=[Required(), Length(1, 20)])
     date = StringField(lazy_gettext('Date Added'), validators=[Required()])
     submit = SubmitField(lazy_gettext('Submit'))
 
     def from_model(self, product):
-        self.type.data = product.type
-        self.serial.data = product.serial
+        #self.type.data = product.type
+        #self.serial.data = product.serial
         self.date.data = product.date_added
 
     def to_model(self, product):
-        product.type = self.type.data
-        product.serial = self.serial.data
+        #product.type = self.type.data
+        #product.serial = self.serial.data
         product.date_added = self.date.data
 
 
@@ -30,13 +30,14 @@ class CommentForm(Form):
 
 
 class FindProductForm(Form):
-    type = SelectField(lazy_gettext('Product Type'), validators=[Required()])
-    serial = StringField(lazy_gettext('Serial Number'), validators=[Required()])
+    #type = SelectField(lazy_gettext('Product Type'), validators=[Required()])
+    #serial = StringField(lazy_gettext('Serial Number'), validators=[Required()])
+    id = StringField(lazy_gettext('Id'), validators=[Required()])
     submit = SubmitField(lazy_gettext('Find'))
 
     def __init__(self, type_choices):
         Form.__init__(self)
-        self.type.choices = type_choices
+        #self.type.choices = type_choices
 
 
 class FindProductsRangeForm(Form):

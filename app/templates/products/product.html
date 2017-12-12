@@ -8,14 +8,9 @@
 
 <div class="product-body">
 	<h3>{{ _('Product Overview') }}</h3>
-	    {% if product.type %}
+	    {% if product.id %}
 		    <div class="product-main">
-		    {{ _('Type') }}: {{ product.type | safe }}
-		    </div>
-	    {% endif %}
-	    {% if product.serial %}
-		    <div class="product-main">
-		    	{{ _('Serial') }}: {{ product.serial | safe }}
+		    {{ _('Id') }}: {{ product.id | safe }}
 		    </div>
 	    {% endif %}
 	    {% if product.date_added %}

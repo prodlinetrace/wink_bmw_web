@@ -2,8 +2,6 @@
 	<thead>
 		<tr>
             <th class="id">{{ _('Id') }}</th>
-            <th class="type">{{ _('Type') }}</th>
-            <th class="serial">{{ _('Serial') }}</th>
             <th class="date">{{ _('Date Added') }}</th>
             <th class="value">{{ _('Success Statuses') }}</th>
             <th class="value">{{ _('Failed Statuses') }}</th>
@@ -19,8 +17,6 @@
 		{% for product in products %}
 		<tr>
 			<td class="right id"><a href="{{ url_for('products.product', id=product.id) }}">{{ product.id }}</a></td>
-			<td class="right type">{{ product.type }}</td>
-			<td class="right serial">{{ product.serial }}</td>
    			<td class="right date">{{ product.date_added }}</td>
 			<td class="right">{{ product.statuses.filter(Status.status==1).count() }}</td>
 			<td class="right" {% if product.statuses.filter(Status.status==2).count() != 0 %} id="red" {% endif %}>{{ product.statuses.filter(Status.status==2).count() }}</td>
