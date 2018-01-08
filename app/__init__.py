@@ -1,11 +1,11 @@
 import six
+from flask_autodoc import Autodoc
 from flask import Flask, g, request, session
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user
 from flask_moment import Moment
 from flask_pagedown import PageDown
-from flask_autodoc import Autodoc
 from flask_babel import Babel
 from config import config
 

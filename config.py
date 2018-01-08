@@ -23,6 +23,7 @@ class Config:
     BABEL_DEFAULT_LOCALE = 'pl'
     MODE = False
     CSV = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     STATION_STATUS_CODES = {
         0: {"result": "UNDEFINED", "desc": "status undefined (not present in database)"},
