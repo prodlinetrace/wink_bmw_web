@@ -1,18 +1,14 @@
 import hashlib
 import bleach
 import logging
-from datetime import datetime
 from markdown import markdown
+from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import request, current_app
 from flask_login import UserMixin
-from . import db, login_manager
+from . import db
 logger = logging.getLogger(__name__)
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
 
 __version__ = '0.0.2'
 
