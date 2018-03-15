@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="page-header type-profile">
+    {% if current_user.is_admin %}<a class="btn btn-default pull-right" href="{{ url_for('types.edit', id=type.id) }}">{{ _('Edit') }}</a>{% endif %}
+    <h1>{{ _('Details for') }}: {{ type.name }}</h1>
+    <p>
+    	<ul>
+	    	<p>{{ _('Id') }}: {{ type.id }}</p>
+	    	<p>{{ _('Name') }}: {{ type.name }}</p>
+ 	    	<p>{{ _('Symbol') }}: {{ type.symbol }}</p>
+	    	{% if type .description %}<p>{{ _('Description') }}: {{ type.description }}</p>{% endif %}
+    	</ul>
+    </p>
+
+</div>
+{% endblock %}

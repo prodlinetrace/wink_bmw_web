@@ -33,6 +33,8 @@
 	                	 <li><a href="{{ url_for('operation_types.index') }}">{{ _('Operations') }}</a></li>
           	 	      	 <li><a href="{{ url_for('operation_statuses.index') }}">{{ _('Statuses') }}</a></li>
            	 	      	 <li><a href="{{ url_for('units.index') }}">{{ _('Units') }}</a></li>
+           	 	      	 <li><a href="{{ url_for('types.index') }}">{{ _('Types') }}</a></li>
+           	 	      	 <li><a href="{{ url_for('descriptions.index') }}">{{ _('Descriptions') }}</a></li>
 	                {% if current_user.is_admin %}
 	                	 <li><a href="{{ url_for('users.index') }}">{{ _('Users') }}</a></li>
 	                {% endif %}

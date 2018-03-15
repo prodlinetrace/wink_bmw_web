@@ -1,0 +1,12 @@
+<tr>
+	<td class="id right"><a href="{{ url_for('types.edit', id=type.id) }}">{{ type.id }}</a></td>
+	<td><a href="{{ url_for('types.type', id=type.id) }}">{{ type.name }}</a></td>
+	<td><a href="{{ url_for('types.type', id=type.id) }}">{{ type.symbol }}</a></td>
+	<td>{{ type.description }}</td>
+	<td class="extras">
+	    {% if current_user.is_admin  %}
+	    <a class="btn btn-danger pull-right" href="{{ url_for('types.delete', id=type.id) }}">{{ _('Delete') }}</a>
+	    <a class="btn btn-primary pull-right" href="{{ url_for('types.edit', id=type.id) }}">{{ _('Edit') }}</a>
+	    {% endif %}
+	</td>
+</tr>

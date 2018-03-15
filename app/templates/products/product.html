@@ -79,7 +79,7 @@
 	            <th class="program_num">{{ _('Program') }}</th>
 	            <th class="nest_num">{{ _('Nest') }}</th>
 	            <th class="date">{{ _('Date') }}</th>
-	            <th>{{ _('Results') }}:<br/>{{ _('Value | Unit | Desc | Timestamp | Extras') }}</th>
+	            <th>{{ _('Results') }}:<br/>{{ _('Desc | Value | Unit | Type | Timestamp | Operations') }}</th>
 	            <th class="extras">{{ _('Extras') }}</th>
 	        </tr>
         </thead>
@@ -98,12 +98,13 @@
 			        	<tbody>
 						{% for result in operation.results %}
 		    				<tr>
-		    					<td class="">{{ "%s" % (result.value) }}</td>
-								<td class="">{{ "%s" % (result.unit_id) }}</td>
 								<td class=""><a href="{{ url_for('descriptions.description', id=result.desc_id )}}" title="{{result.desc.description }}">{{ result.desc.name | safe}}</a></td>
+		    					<td class="">{{ "%s" % (result.value) }}</td>
+								<td class=""><a href="{{ url_for('units.unit', id=result.unit_id )}}" title="{{result.unit.name }}">[{{ result.unit.symbol | safe}}]</a></td>
+								<td class=""><a href="{{ url_for('types.type', id=result.type_id )}}" title="{{result.type.name }}">{{ result.type.symbol | safe}}</a></td>
 								<td class="">{{ result.date_time | safe }}</td>
 								<td class="">edit result, delete result</td>
-		    				</tr>						
+		    				</tr>
 						{% endfor %}
 	    		        </tbody>
     				</table>

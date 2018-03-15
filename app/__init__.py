@@ -97,6 +97,9 @@ def create_app(config_name):
     from .descriptions import descriptions as descriptions_blueprint
     app.register_blueprint(descriptions_blueprint, url_prefix='/app/descriptions')
 
+    from .types import types as types_blueprint
+    app.register_blueprint(types_blueprint, url_prefix='/app/types')
+
     from .statistics import statistics as statistics_blueprint
     app.register_blueprint(statistics_blueprint, url_prefix='/app/statistics')
 

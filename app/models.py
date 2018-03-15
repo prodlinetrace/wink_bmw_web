@@ -273,7 +273,6 @@ class Result(db.Model):
     station_id = db.Column(db.Integer, db.ForeignKey('station.id'))
     operation_id = db.Column(db.Integer, db.ForeignKey('operation.id'))
     # TODO FIXME
-    # unit_id = db.Column(db.Integer, db.ForeignKey('unit.id'))
     unit_id = db.Column(db.Integer, db.ForeignKey('unit.id'))
     #type_id = db.Column(db.Integer)  # type should be used for casting.
     type_id = db.Column(db.Integer, db.ForeignKey('type.id'))  # type should be used for casting.
@@ -281,7 +280,8 @@ class Result(db.Model):
     value = db.Column(db.String(30))
     date_time = db.Column(db.String(40))
     # units = db.relationship('Unit', lazy='dynamic', backref='result')
-    # TODO: consider adding timestamp here. 
+    # TODO: consider status of the result
+    
     """
         # type_id = 1  # 1 - STRING, 2 - INT, 3 - REAL, 4 - BOOL
         # unit_id = 3  # 0 [None], 1 [N], 2 [Nm], 3 [deg], 4 [mm], 5 [kN],  7 [mbar l/s], 8 [bar], 9 [mbar], 10 [m], 20 [Pa], 30 [s], 99 [bool], 
@@ -316,7 +316,7 @@ class Result(db.Model):
             'type_id': self.type_id,
             'desc_id': self.desc_id,
             'value': self.value,
-            'desc_id': self.date_time,
+            'date_time': self.date_time,
         }
 
 
@@ -406,7 +406,8 @@ class Unit(db.Model):
     name = db.Column(db.String(64))
     symbol = db.Column(db.String(16))
     description = db.Column(db.String(255))
-    unit = db.relationship('Operation_Status', lazy='dynamic', backref='unit', foreign_keys='Operation_Status.unit_id')
+    operation_status = db.relationship('Operation_Status', lazy='dynamic', backref='unit', foreign_keys='Operation_Status.unit_id')
+    result = db.relationship('Result', lazy='dynamic', backref='unit')
 
     def __init__(self, ident, name="Default Unit Name", symbol="Default Unit Symbol", description="Default Unit Description"):
         self.id = ident
@@ -458,10 +459,10 @@ class Type(db.Model):
     name = db.Column(db.String(64))
     symbol = db.Column(db.String(16))
     description = db.Column(db.String(255))
-    type = db.relationship('Result', lazy='dynamic', backref='type', foreign_keys='Result.type_id')
+    result = db.relationship('Result', lazy='dynamic', backref='type', foreign_keys='Result.type_id')
 
 
-    def __init__(self, ident, name="Default Type Name", description="Default Type Description"):
+    def __init__(self, ident, name="Default Type Name", symbol="Default Type Symbol", description="Default Type Description"):
         self.id = ident
         self.name = name
         self.symbol = symbol
