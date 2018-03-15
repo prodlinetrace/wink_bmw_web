@@ -10,7 +10,7 @@ from flask_login import UserMixin
 from . import db
 logger = logging.getLogger(__name__)
 
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 
 try:
     from . import login_manager
@@ -192,8 +192,6 @@ class Status(db.Model):
     program_number = db.Column(db.Integer)
     nest_number = db.Column(db.Integer)
 
-    #new_status = Status(status=status, product=product, program=program, nest=nest, station=station, user=operator, date_time=date_time)
-
     def __init__(self, status, product, program, nest, station_id, user=None, date_time=None):
         self.status = status
         self.product_id = product
@@ -231,21 +229,11 @@ class Operation(db.Model):
     station_id = db.Column(db.Integer, db.ForeignKey('station.id'))
     operation_status_id = db.Column(db.Integer, db.ForeignKey('operation_status.id'))
     operation_type_id = db.Column(db.Integer, db.ForeignKey('operation_type.id'))
-    #program_id = db.Column(db.String(20), db.ForeignKey('program.id'))
     program_number = db.Column(db.Integer)
     nest_number = db.Column(db.Integer)
     date_time = db.Column(db.String(40))
-    """
-    result_1 = db.Column(db.Float)
-    result_1_max = db.Column(db.Float)
-    result_1_min = db.Column(db.Float)
-    result_1_status_id = db.Column(db.Integer, db.ForeignKey('operation_status.id'))
-    result_2 = db.Column(db.Float)
-    result_2_max = db.Column(db.Float)
-    result_2_min = db.Column(db.Float)
-    result_2_status_id = db.Column(db.Integer, db.ForeignKey('operation_status.id'))
-    """
-    #def __init__(self, product, station, operation_status_id, operation_type_id, program_number, nest_number, date_time, r1=None, r1_max=None, r1_min=None, r1_stat=None, r2=None, r2_max=None, r2_min=None, r2_stat=None):
+    results = db.relationship('Result', lazy='dynamic', backref='operation')
+
     def __init__(self, product, station, operation_status_id, operation_type_id, program_number, nest_number, date_time):
         self.product_id = product
         self.station_id = station
@@ -257,17 +245,7 @@ class Operation(db.Model):
         if date_time is None:
             date_time = datetime.now()
         self.date_time = str(date_time)
-        """
-        self.result_1 = r1
-        self.result_1_max = r1_max
-        self.result_1_min = r1_min
-        self.result_1_status_id = r1_stat
 
-        self.result_2 = r2
-        self.result_2_max = r2_max
-        self.result_2_min = r2_min
-        self.result_2_status_id = r2_stat
-        """
     def __repr__(self):
         return '<Assembly Operation Id: {id} for: Product: {product} Station: {station} Operation_type: {operation_type}>'.format(id=self.id, product=self.product_id, station=self.station_id, operation_type=self.operation_type_id)
 
@@ -286,17 +264,7 @@ class Operation(db.Model):
             'nest_number': self.nest_number,
             'date_time': self.date_time
         }
-        '''
-        'result_1': self.result_1,
-        'result_1_max': self.result_1_max,
-        'result_1_min': self.result_1_min,
-        'result_1_status_id': self.result_1_status_id,
 
-        'result_2': self.result_2,
-        'result_2_max': self.result_2_max,
-        'result_2_min': self.result_2_min,
-        'result_2_status_id': self.result_2_status_id,
-        '''
         
 class Result(db.Model):
     __tablename__ = 'result'
@@ -307,18 +275,20 @@ class Result(db.Model):
     # TODO FIXME
     # unit_id = db.Column(db.Integer, db.ForeignKey('unit.id'))
     unit_id = db.Column(db.Integer, db.ForeignKey('unit.id'))
-    type_id = db.Column(db.Integer)  # type should be used for casting.
+    #type_id = db.Column(db.Integer)  # type should be used for casting.
+    type_id = db.Column(db.Integer, db.ForeignKey('type.id'))  # type should be used for casting.
     desc_id = db.Column(db.Integer, db.ForeignKey('desc.id'))
     value = db.Column(db.String(30))
-    
+    date_time = db.Column(db.String(40))
+    # units = db.relationship('Unit', lazy='dynamic', backref='result')
     # TODO: consider adding timestamp here. 
-
     """
         # type_id = 1  # 1 - STRING, 2 - INT, 3 - REAL, 4 - BOOL
-        # unit_id = 3  # 1 [Nm], 2 [N], 3 [Pa], 4 [bool], 5 [s], 6 [None], 7 [mbar l/s], 8 [bar], 9 [mbar]
+        # unit_id = 3  # 0 [None], 1 [N], 2 [Nm], 3 [deg], 4 [mm], 5 [kN],  7 [mbar l/s], 8 [bar], 9 [mbar], 10 [m], 20 [Pa], 30 [s], 99 [bool], 
         self.database_engine.write_result(detail_id, station_id, operation_id, unit_id=unit_id, value_type_id=value_type_id, value=ReadID_id)
     """
-    def __init__(self, product, station, operation_id, unit_id, type_id, desc_id, value):
+
+    def __init__(self, product, station, operation_id, unit_id, type_id, desc_id, value, date_time=None):
         self.product_id = product
         self.station_id = station
         self.operation_id = operation_id
@@ -326,6 +296,10 @@ class Result(db.Model):
         self.type_id = type_id
         self.desc_id = desc_id
         self.value = value
+        if date_time is None:
+            date_time = datetime.now()
+        self.date_time = str(date_time)
+
     def __repr__(self):
         return '<Assembly Result Id: {id} for: Product: {product} Station: {station} operation_id: {operation_id}>'.format(id=self.id, product=self.product_id, station=self.station_id, operation_id=self.operation_id)
 
@@ -341,7 +315,8 @@ class Result(db.Model):
             'unit_id': self.unit_id,
             'type_id': self.type_id,
             'desc_id': self.desc_id,
-            'value': self.value
+            'value': self.value,
+            'desc_id': self.date_time,
         }
 
 
@@ -352,10 +327,6 @@ class Operation_Status(db.Model):
     description = db.Column(db.String(255))
     unit_id = db.Column(db.Integer, db.ForeignKey('unit.id'))
     operations = db.relationship('Operation', lazy='dynamic', backref='operation_status',  foreign_keys='Operation.operation_status_id')
-
-    #result_1_status = db.relationship('Operation', lazy='dynamic', backref='result_1_status', foreign_keys='Operation.result_1_status_id')
-    #result_2_status = db.relationship('Operation', lazy='dynamic', backref='result_2_status', foreign_keys='Operation.result_2_status_id')
-
     status = db.relationship('Status', lazy='dynamic', backref='status_name', foreign_keys='Status.status')
 
     def __init__(self, ident, name="Default Operation Status", description="Default Operation Status Description", unit_id=None):
@@ -402,7 +373,7 @@ class Operation_Type(db.Model):
             'description': self.description,
         }
 
-
+'''
 class Program(db.Model):
     __tablename__ = 'program'
     id = db.Column(db.String(20), primary_key=True)
@@ -427,7 +398,7 @@ class Program(db.Model):
             'name': self.name,
             'description': self.description,
         }
-
+'''
 
 class Unit(db.Model):
     __tablename__ = 'unit'
@@ -462,6 +433,7 @@ class Desc(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
     description = db.Column(db.String(255))
+    result = db.relationship('Result', lazy='dynamic', backref='desc')
 
     def __init__(self, ident, name="Default Desc Name", description="Default Desc Description"):
         self.id = ident
@@ -479,3 +451,32 @@ class Desc(db.Model):
             'name': self.name,
             'description': self.description,
         }
+        
+class Type(db.Model):
+    __tablename__ = 'type'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64))
+    symbol = db.Column(db.String(16))
+    description = db.Column(db.String(255))
+    type = db.relationship('Result', lazy='dynamic', backref='type', foreign_keys='Result.type_id')
+
+
+    def __init__(self, ident, name="Default Type Name", description="Default Type Description"):
+        self.id = ident
+        self.name = name
+        self.symbol = symbol
+        self.description = description
+
+    def __repr__(self):
+        return '<Type Id: {id} Name: {name} Symbol: {symbol} Description: {desc}>'.format(id=self.id, name=self.name, symbol=self.symbol, desc=self.description)
+
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'id': self.id,
+            'name': self.name,
+            'symbol': self.symbol,
+            'description': self.description,
+        }
+        

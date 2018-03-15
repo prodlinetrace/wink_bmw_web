@@ -79,7 +79,7 @@
 	            <th class="program_num">{{ _('Program') }}</th>
 	            <th class="nest_num">{{ _('Nest') }}</th>
 	            <th class="date">{{ _('Date') }}</th>
-	            <th>{{ _('Operation Measurement') }}:<br/>{{ _('Minimum | Result | Maximum | Unit | Status') }}</th>
+	            <th>{{ _('Results') }}:<br/>{{ _('Value | Unit | Desc | Timestamp | Extras') }}</th>
 	            <th class="extras">{{ _('Extras') }}</th>
 	        </tr>
         </thead>
@@ -96,7 +96,15 @@
     			<td>
     				<table id="result" class="operation_data">
 			        	<tbody>
-
+						{% for result in operation.results %}
+		    				<tr>
+		    					<td class="">{{ "%s" % (result.value) }}</td>
+								<td class="">{{ "%s" % (result.unit_id) }}</td>
+								<td class=""><a href="{{ url_for('descriptions.description', id=result.desc_id )}}" title="{{result.desc.description }}">{{ result.desc.name | safe}}</a></td>
+								<td class="">{{ result.date_time | safe }}</td>
+								<td class="">edit result, delete result</td>
+		    				</tr>						
+						{% endfor %}
 	    		        </tbody>
     				</table>
     			</td>
