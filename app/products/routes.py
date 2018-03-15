@@ -47,6 +47,7 @@ def index():
     if debug_print:
         print("after pagination:", datetime.now() - start)
     t = render_template('products/index.html', products=products, pagination=pagination, Status=Status, Operation=Operation)
+    #t = None
     if debug_print:
         print("FINISHED template rendering:", datetime.now() - start)
     return t
