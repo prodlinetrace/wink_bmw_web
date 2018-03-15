@@ -9,7 +9,7 @@ import six
 class Operation_StatusForm(Form):
     id = IntegerField(lazy_gettext('Id'), validators=[InputRequired()])
     name = StringField(lazy_gettext('Name'), validators=[Required(), Length(1, 50)])
-    unit_id = SelectField(lazy_gettext('Unit'))
+    unit_id = SelectField(lazy_gettext('Unit'), coerce=int)
     description = StringField(lazy_gettext('Description'), validators=[Optional(), Length(1, 255)])
     submit = SubmitField(lazy_gettext('Submit'))
 
