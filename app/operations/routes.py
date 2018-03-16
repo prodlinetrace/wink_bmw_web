@@ -31,3 +31,59 @@ def delete(id):
 
     # should never get here
     return render_template('operations/index.html')
+
+@operations.route('/<int:id>')
+@login_required
+def operation(id):
+    operation = Operation.query.filter_by(id=id).first_or_404()
+    page = request.args.get('page', 1, type=int)
+    return render_template('operations/operation.html', operation=operation)
+
+
+@operations.route('/new', methods=['GET', 'POST'])
+@login_required
+def new():
+    if not current_user.is_admin:
+        abort(403)
+    _last_operation_id = Operation.query.first()
+    id = 1
+    if _last_operation_id is not None:
+        id = _last_operation_id.id + 1
+    form = OperationForm()
+    if form.validate_on_submit():
+        operation = Operation(id)
+        form.to_model(operation)  # update operation object with form data
+        db.session.add(operation)
+        db.session.commit()
+        flash(gettext(u'New operation: {operation} was added successfully.'.format(operation=operation.name)))
+        return redirect(url_for('.index'))
+    else:
+        if form.errors:
+            flash(gettext("Validation failed"))
+        for field, errors in form.errors.items():
+            for error in errors:
+                flash(u"Error in the %s field - %s" % ( getattr(form, field).label.text, error))
+    return render_template('operations/new.html', form=form)
+
+
+@operations.route('/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit(id):
+    operation = Operation.query.get_or_404(id)
+    if not current_user.is_admin:
+        abort(403)
+    form = OperationForm()
+    if form.validate_on_submit():
+        form.to_model(operation)
+        db.session.add(operation)
+        db.session.commit()
+        flash(gettext(u'Operation with id: {operation} has been updated.'.format(operation=operation.id)))
+        return redirect(url_for('.index'))
+    else:
+        if form.errors:
+            flash(gettext("Validation failed"))
+        for field, errors in form.errors.items():
+            for error in errors:
+                flash(u"Error in the %s field - %s" % ( getattr(form, field).label.text, error))
+    form.from_model(operation)
+    return render_template('operations/edit.html', operation=operation, form=form)

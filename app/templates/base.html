@@ -30,8 +30,10 @@
             	<li><a href="{{ url_for('products.export_csv') }}">{{ _('Export') }}</a></li>
                 {% if current_user.is_authenticated %}
 	                	 <li><a href="{{ url_for('stations.index') }}">{{ _('Stations') }}</a></li>
-	                	 <li><a href="{{ url_for('operation_types.index') }}">{{ _('Operations') }}</a></li>
-          	 	      	 <li><a href="{{ url_for('operation_statuses.index') }}">{{ _('Statuses') }}</a></li>
+	                	 <li><a href="{{ url_for('operations.index') }}">{{ _('Operations') }}</a></li>
+	                	 <li><a href="{{ url_for('operation_types.index') }}">{{ _('Operation Types') }}</a></li>
+          	 	      	 <li><a href="{{ url_for('operation_statuses.index') }}">{{ _('Operation Statuses') }}</a></li>
+        	 	         <li><a href="{{ url_for('results.index') }}">{{ _('Results') }}</a></li>
            	 	      	 <li><a href="{{ url_for('units.index') }}">{{ _('Units') }}</a></li>
            	 	      	 <li><a href="{{ url_for('types.index') }}">{{ _('Types') }}</a></li>
            	 	      	 <li><a href="{{ url_for('descriptions.index') }}">{{ _('Descriptions') }}</a></li>

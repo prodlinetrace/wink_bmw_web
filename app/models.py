@@ -21,6 +21,7 @@ except ImportError as e:
     # desktop app - ignore in case login_manager is not defined.  
     pass
 
+
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -272,15 +273,10 @@ class Result(db.Model):
     product_id = db.Column(db.String(30), db.ForeignKey('product.id'))
     station_id = db.Column(db.Integer, db.ForeignKey('station.id'))
     operation_id = db.Column(db.Integer, db.ForeignKey('operation.id'))
-    # TODO FIXME
     unit_id = db.Column(db.Integer, db.ForeignKey('unit.id'))
-    #type_id = db.Column(db.Integer)  # type should be used for casting.
     type_id = db.Column(db.Integer, db.ForeignKey('type.id'))  # type should be used for casting.
     desc_id = db.Column(db.Integer, db.ForeignKey('desc.id'))
     value = db.Column(db.String(30))
-    date_time = db.Column(db.String(40))
-    # units = db.relationship('Unit', lazy='dynamic', backref='result')
-    # TODO: consider status of the result
     
     """
         # type_id = 1  # 1 - STRING, 2 - INT, 3 - REAL, 4 - BOOL
@@ -296,9 +292,6 @@ class Result(db.Model):
         self.type_id = type_id
         self.desc_id = desc_id
         self.value = value
-        if date_time is None:
-            date_time = datetime.now()
-        self.date_time = str(date_time)
 
     def __repr__(self):
         return '<Assembly Result Id: {id} for: Product: {product} Station: {station} operation_id: {operation_id}>'.format(id=self.id, product=self.product_id, station=self.station_id, operation_id=self.operation_id)
@@ -316,7 +309,6 @@ class Result(db.Model):
             'type_id': self.type_id,
             'desc_id': self.desc_id,
             'value': self.value,
-            'date_time': self.date_time,
         }
 
 
@@ -373,32 +365,6 @@ class Operation_Type(db.Model):
             'description': self.description,
         }
 
-'''
-class Program(db.Model):
-    __tablename__ = 'program'
-    id = db.Column(db.String(20), primary_key=True)
-    name = db.Column(db.String(64))
-    description = db.Column(db.String(255))
-    #operations = db.relationship('Operation', lazy='dynamic', backref='program', foreign_keys='Operation.program_id')
-    #statuses = db.relationship('Status', lazy='dynamic', backref='program', foreign_keys='Status.program_id')
-
-    def __init__(self, ident, name="Default Program Name", description="Default Program Description"):
-        self.id = ident
-        self.name = name
-        self.description = description
-
-    def __repr__(self):
-        return '<Operation_Type Id: {id} Name: {name} Description: {desc}>'.format(id=self.id, name=self.name, desc=self.description)
-
-    @property
-    def serialize(self):
-        """Return object data in easily serializeable format"""
-        return {
-            'id': self.id,
-            'name': self.name,
-            'description': self.description,
-        }
-'''
 
 class Unit(db.Model):
     __tablename__ = 'unit'
@@ -452,7 +418,8 @@ class Desc(db.Model):
             'name': self.name,
             'description': self.description,
         }
-        
+
+
 class Type(db.Model):
     __tablename__ = 'type'
     id = db.Column(db.Integer, primary_key=True)
@@ -480,4 +447,3 @@ class Type(db.Model):
             'symbol': self.symbol,
             'description': self.description,
         }
-        

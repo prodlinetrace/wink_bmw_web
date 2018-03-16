@@ -7,8 +7,12 @@
     <p>
     	<ul>
 	    	{% if operation.id %}<p>{{ _('Id') }}: {{ operation.id }}</p>{% endif %}
-	    	{% if operation.operation_status.name %}<p>{{ _('Name') }}: {{ operation.operation_status.name }}</p>{% endif %}
-	    	{% if operation.operation_status.description %}<p>{{ _('Description') }}: {{ operation.operation_status.description }}</p>{% endif %}
+
+			<p>{{ _('Product') }}: <a href="{{ url_for('products.product', id=operation.product_id) }}">{{ operation.product_id }}</a></p>
+			<p>{{ _('Station') }}: <a href="{{ url_for('stations.station', id=operation.station_id) }}">{{ operation.station.name }}</a></p>
+  			<p>{{ _('Operation Type') }}: <a href="{{ url_for('operation_types.operation_type', id=operation.operation_type.id) }}">{{ operation.operation_type.name }}</a></p>  	
+  			<p>{{ _('Status') }}: <a href="{{ url_for('operation_statuses.operation_status', id=operation.operation_status.id) }}">{{ operation.operation_status.name }}</a></p>
+	    	
     	</ul>
     </p>
     
