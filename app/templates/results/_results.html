@@ -1,0 +1,35 @@
+<table cellspacing="0" id="results" class="results tablesorter">
+	<thead>
+		<tr>
+			<th class="id">{{ _('Id') }}</th>
+			<th>{{ _('Product') }}</th>
+			<th>{{ _('Station') }}</th>
+			<th>{{ _('Operation') }}</th>
+			<th>{{ _('Description') }}</th>
+			<th>{{ _('Value') }}</th>
+			<th>{{ _('Unit') }}</th>
+			<th>{{ _('Type') }}</th>
+			<th style="width:150px">{{ _('Extras') }}</th>
+		</tr>
+    </thead>
+    <tbody>
+	{% for result in results %}
+		<tr>
+			<td class="right"><a href="{{ url_for('results.edit', id=result.id) }}">{{ result.id }}</a></td>
+			<td><a href="{{ url_for('products.product', id=result.product_id) }}">{{ result.product_id }}</a></td>
+			<td><a href="{{ url_for('stations.station', id=result.station_id) }}">{{ result.operation.station.name }}</a></td>
+			<td><a href="{{ url_for('operations.operation', id=result.operation_id) }}">{{ result.operation.id }} ({{ result.operation.operation_type.name }})</a></td>
+			<td><a href="{{ url_for('descriptions.description', id=result.desc.id) }}">{{ result.desc.name }}</a></td>
+			<td><a href="{{ url_for('results.result', id=result.id) }}">{{ result.value }}</a></td>
+			<td><a href="{{ url_for('units.unit', id=result.unit.id) }}">{{ result.unit.symbol }}</a></td>
+			<td><a href="{{ url_for('types.type', id=result.type.id) }}">{{ result.type.symbol }}</a></td>
+			<td>
+			    {% if current_user.is_admin  %}
+			    <a class="btn btn-danger pull-right" href="{{ url_for('results.delete', id=result.id) }}">{{ _('Delete') }}</a>
+			    <a class="btn btn-primary pull-right" href="{{ url_for('results.edit', id=result.id) }}">{{ _('Edit') }}</a>
+			    {% endif %}
+			</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
