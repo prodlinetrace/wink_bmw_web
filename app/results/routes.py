@@ -3,9 +3,10 @@ from flask_login import login_required, current_user
 from flask_babel import gettext
 from flask_paginate import Pagination
 from .. import db
-from ..models import Result
+from ..models import Result, Unit, Product, Station, Operation, Desc, Type
 from . import results
 from .forms import ResultForm
+import six
 
 
 @results.route('/')
@@ -36,13 +37,21 @@ def new():
     id = 1
     if _last_result_id is not None:
         id = _last_result_id.id + 1
-    form = ResultForm()
+        
+    product_choices = [(six.u(product.id), six.u("{id} - {date}".format(id=product.id, date=product.date_added))) for product in Product.query.order_by(Product.id.asc())]
+    station_choices = [(six.u(station.id), six.u("{id} - {name}".format(id=station.id, name=station.name))) for station in Station.query.order_by(Station.id.asc())]
+    operation_choices = [(six.u(operation.id), six.u("{id} - {date}".format(id=operation.id, date=operation.date_time))) for operation in Operation.query.order_by(Operation.id.asc())]
+    unit_choices = [(six.u(unit.id), six.u("[{symbol}] - {name}".format(symbol=unit.symbol, name=unit.name))) for unit in Unit.query.order_by(Unit.id.asc())]
+    type_choices = [(six.u(type.id), six.u("{id} - {name}".format(id=type.id, name=type.name))) for type in Type.query.order_by(Type.id.asc())]
+    desc_choices = [(six.u(desc.id), six.u("{id} - {name}".format(id=desc.id, name=desc.name))) for desc in Desc.query.order_by(Desc.id.asc())]
+
+    form = ResultForm(product_choices, station_choices, operation_choices, unit_choices, type_choices, desc_choices)
     if form.validate_on_submit():
-        result = Result(id)
+        result = Result(form.product_id, form.station_id, form.operation_id, form.unit_id, form.type_id, form.desc_id, form.value)
         form.to_model(result)  # update result object with form data
         db.session.add(result)
         db.session.commit()
-        flash(gettext(u'New result: {result} was added successfully.'.format(result=result.name)))
+        flash(gettext(u'New result: {result} was added successfully.'.format(result=result.id)))
         return redirect(url_for('.index'))
     else:
         if form.errors:
@@ -59,7 +68,14 @@ def edit(id):
     result = Result.query.get_or_404(id)
     if not current_user.is_admin:
         abort(403)
-    form = ResultForm()
+    product_choices = [(six.u(product.id), six.u("{id} - {date}".format(id=product.id, date=product.date_added))) for product in Product.query.order_by(Product.id.asc())]
+    station_choices = [(six.u(station.id), six.u("{id} - {name}".format(id=station.id, name=station.name))) for station in Station.query.order_by(Station.id.asc())]
+    operation_choices = [(six.u(operation.id), six.u("{id} - {date}".format(id=operation.id, date=operation.date_time))) for operation in Operation.query.order_by(Operation.id.asc())]
+    unit_choices = [(six.u(unit.id), six.u("[{symbol}] - {name}".format(symbol=unit.symbol, name=unit.name))) for unit in Unit.query.order_by(Unit.id.asc())]
+    type_choices = [(six.u(type.id), six.u("{id} - {name}".format(id=type.id, name=type.name))) for type in Type.query.order_by(Type.id.asc())]
+    desc_choices = [(six.u(desc.id), six.u("{id} - {name}".format(id=desc.id, name=desc.name))) for desc in Desc.query.order_by(Desc.id.asc())]
+
+    form = ResultForm(product_choices, station_choices, operation_choices, unit_choices, type_choices, desc_choices)
     if form.validate_on_submit():
         form.to_model(result)
         db.session.add(result)

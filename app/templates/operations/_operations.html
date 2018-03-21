@@ -6,6 +6,7 @@
 			<th>{{ _('Station') }}</th>
 			<th>{{ _('Operation Type') }}</th>
 			<th>{{ _('Status') }}</th>
+            <th class="date">{{ _('Date Added') }}</th>
 			<th style="width:150px">{{ _('Extras') }}</th>
 		</tr>
     </thead>
@@ -17,6 +18,7 @@
 			<td><a href="{{ url_for('stations.station', id=operation.station_id) }}">{{ operation.station.name }}</a></td>
   			<td><a href="{{ url_for('operation_types.operation_type', id=operation.operation_type.id) }}">{{ operation.operation_type.name }}</a></td>  	
   			<td><a href="{{ url_for('operation_statuses.operation_status', id=operation.operation_status.id) }}">{{ operation.operation_status.name }}</a></td>
+   			<td class="right date">{{ operation.date_time }}</td>
 
 			<td>
 				{% if current_user.is_admin  %}

@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 
 {% block page_content %}
+{% if current_user.is_admin %}
+	<a class="btn btn-primary pull-right" href="{{ url_for('operations.new') }}">{{ _('New Operation') }}</a>
+{% endif %}
+
 <ul class="pager">
 	{{ pagination.links }}
 </ul>
