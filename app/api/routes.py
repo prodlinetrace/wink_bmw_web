@@ -5,7 +5,7 @@ from flask_login import login_required, current_user
 from .. import db, auto, cfg
 from ..models import *
 from . import api as rest
-from flask_autodoc import Autodoc
+from flask_selfdoc import Autodoc
 import logging
 import six
 from sqlalchemy.exc import IntegrityError

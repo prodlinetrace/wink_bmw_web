@@ -1,5 +1,5 @@
 import six
-from flask_autodoc import Autodoc
+from flask_selfdoc import Autodoc
 from flask import Flask, g, request, session
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
