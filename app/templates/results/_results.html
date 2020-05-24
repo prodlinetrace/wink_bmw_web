@@ -22,7 +22,10 @@
 			<td><a href="{{ url_for('descriptions.description', id=result.desc.id) }}">{{ result.desc.name }}</a></td>
 			<td><a href="{{ url_for('results.result', id=result.id) }}">{{ result.value }}</a></td>
 			<td><a href="{{ url_for('units.unit', id=result.unit.id) }}">{{ result.unit.symbol }}</a></td>
-			<td><a href="{{ url_for('types.type', id=result.type.id) }}">{{ result.type.symbol }}</a></td>
+			<td>type? what does it supposed to be??</td>
+			<!--{# 
+			<td><a href="{{ url_for('types.type', id=result.type.id) }}">{{ result.type.id }}</a></td>
+			#}-->
 			<td>
 			    {% if current_user.is_admin  %}
 			    <a class="btn btn-danger pull-right" href="{{ url_for('results.delete', id=result.id) }}">{{ _('Delete') }}</a>
