@@ -86,7 +86,7 @@
         <tbody>
 			{% for operation in product.operations %}
     		<tr>
-    			<td class="right">{{ operation.id }}</td>
+    			<td class="right"><a href="{{ url_for('operations.edit', id=operation.id) | safe}}" title="Edit operation {{operation.id | safe}}">{{ operation.id }}</a></td>
     			{% if operation.station %}<td><a href="{{ url_for('stations.station', id=operation.station.id) | safe}}" title="{{operation.station.ip | safe}}">{{ operation.station.name }}</a></td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
     			{% if operation.operation_status %} <td  {% if operation.operation_status.id == 2 %} id="red" {% endif %} {% if operation.operation_status.id == 1 %} id="green" {% endif %}><a href="{{ url_for('operation_statuses.operation_status', id=operation.operation_status.id) | safe}}" title="{{operation.operation_status.description | safe}}">{{ operation.operation_status.name }}</a></td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
     			{% if operation.operation_type %} <td><a href="{{ url_for('operation_types.operation_type', id=operation.operation_type.id )}}" title="{{operation.operation_type.description }}">{{ operation.operation_type.name | safe}}</a></td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
@@ -102,7 +102,7 @@
 		    					<td class="">{{ "%s" % (result.value) }}</td>
 								<td class=""><a href="{{ url_for('units.unit', id=result.unit_id )}}" title="{{result.unit.name }}">[{{ result.unit.symbol | safe}}]</a></td>
 								<td class=""><a href="{{ url_for('types.type', id=result.type_id )}}" title="{{result.type.name }}">{{ result.type.symbol | safe}}</a></td>
-								<td class="">edit result, delete result</td>
+								<td class=""><a href="{{ url_for('results.edit', id=result.id )}}" title="Edit result {{result.id }}">edit</a> <a href="{{ url_for('results.delete', id=result.id )}}" title="Delete result {{result.id }}">delete</a></td>
 		    				</tr>
 						{% endfor %}
 	    		        </tbody>
