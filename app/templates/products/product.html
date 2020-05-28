@@ -8,27 +8,171 @@
 
 <div class="product-body">
 	<h3>{{ _('Product Overview') }}</h3>
-	    {% if product.id %}
-		    <div class="product-main">
-		    {{ _('Id') }}: {{ product.id | safe }}
-		    </div>
-	    {% endif %}
-	    {% if product.date_added %}
-		    <div class="product-main">
-		    	{{ _('Date Added') }}: {{ product.date_added | safe }}
-	    	</div>
-	    {% endif %}
-	    {% if product.statuses %}
-		    <div class="product-main">
-		    	{{ _('Statuses (Failed / Success / Total)') }}:  {{ product.statuses.filter(Status.status==2).count() }} / {{ product.statuses.filter(Status.status==1).count() }} / {{ product.statuses.count() }}
-	    	</div>
-	    {% endif %}
+		<table cellspacing="0" id="global_info">
+		<tr>
+			<td>
+		    	{{ _('ID') }}: 
+   	    	</td>
+	    	<td>
+		    	{{ product.id | safe }}
+	    	</td>
+	    </tr>
+		<tr>
+	    	<td>
+		    	{{ _('Year') }}: 
+   	    	</td>
+	    	<td>
+		    	20{{ (product.year| string) | safe }}
+	    	</td>
+	    </tr>
+		<tr>
+			<td>
+		    	{{ _('Week') }}: 
+   	    	</td>
+	    	<td>
+	    	</td>
+	    </tr>
+		<tr>
+			<td>
+		    	{{ _('Date Added') }}:
+			</td>
+			<td>
+		    	{{ product.date_added | safe }}
+	    	</td>
+	    </tr>
+		<tr>
+			<td>
+   	    		{{ _('Processing Time') }}:
+			</td>
+			<td>
+				{% if product.processing_time %}
+					<span>{{ product.processing_time | safe }}</span>
+				{% else %}
+					<span id="yellow">{{_('UNDEF')}}</span>
+				{% endif %}
+	    	</td>
+	    </tr>
+		<tr>
+			<td>
+	    		{{ _('Successful Statuses') }}:
+			</td>
+			<td>
+	    		<span {% if  product.status_count_bad > 0 %} id="red" {% else %} id="green" {% endif %}>{{ product.status_count_good }} {{ _('out of') }} {{ product.status_count }}</span>
+	    	</td>
+	    </tr>
+		<tr>
+			<td>
+   	    		{{ _('Successful Operations') }}:
+			</td>
+			<td>
+   	    		 <span {% if  product.operation_count_bad > 0 %} id="red" {% else %} id="green" {% endif %}> {{ product.operation_count_good }} {{ _('out of') }} {{ product.operation_count }}</span>
+	    	</td>
+	    </tr>
+		<tr>
+			<td>
+   	    		{{ _('Electronic Stamp') }}:
+			</td>
+			<td>
+				{% if product.electronic_stamp %}
+					{% if  product.electronic_stamp.status == 1 %} <span id="green">{{_('OK')}} @ {{product.electronic_stamp.datetime}} {{ _('by') }} <a href="{{  url_for('users.user', login=product.electronic_stamp.user.login) |safe}}" title="{{product.electronic_stamp.user.name | safe}}">{{ product.electronic_stamp.user.name }}</a></span>{% endif %}
+					{% if  product.electronic_stamp.status == 2 %} <span id="red">{{_('NOK')}} @ {{product.electronic_stamp.datetime}} {{ _('by') }} <a href="{{  url_for('users.user', login=product.electronic_stamp.user.login) |safe}}" title="{{product.electronic_stamp.user.name | safe}}">{{ product.electronic_stamp.user.name }}</a></span>{% endif %}
+				{% else %}
+					<span id="yellow">{{_('UNDEF')}}</span>
+				{% endif %}
+	    	</td>
+	    </tr>
+    </table> 
 
-	    {% if product.operations %}
-		    <div class="product-main">
-		    	{{ _('Operations (Failed / Success / Total)') }}: {{ product.operations.filter(Operation.operation_status_id==2).count() }} / {{ product.operations.filter(Operation.operation_status_id==1).count() }}  / {{ product.operations.count() }}
-	    	</div>
-	    {% endif %}
+	<h3>{{ _('Combined Overview') }}</h3>
+	<table cellspacing="0" id="statuses" class="tablesorter">
+	  <colgroup>
+		    <col class="id">
+		    <col class="name">
+		    <col class="name">
+		    <col class="date">
+  		</colgroup>
+		<thead>
+	   		<tr>
+	            <th class="id">{{ _('Ident') }}</th>
+	            <th class="status">{{ _('Status') }}</th>
+	            <th class="name">{{ _('Station') }}</th>
+  	            <th class="user">{{ _('Program') }}</th>
+  	            <th class="user">{{ _('Nest') }}</th>
+	            <th class="date">{{ _('Date') }}</th>
+	            <th class="name">{{ _('User') }}</th>
+	            <th class="operations">{{ _('Results') }}:<br/>{{ _('Desc | Value | Unit | Type | Operations') }}</th>
+	            <th class="extras">{{ _('Extras') }}</th>
+	        </tr>
+        </thead>
+        <tbody>
+			{% for status in product.statuses %}
+   			<tr>
+   				<td class="right">{{ status.id }}</td>
+				{% if status.status_name %} <td {% if status.status_name.id == 2 %} id="red" {% endif %} {% if status.status_name.id == 1 %} id="green" {% endif %}><a href="{{ url_for('operation_statuses.operation_status', id=status.status_name.id) | safe}}" title="{{status.status_name.description | safe}}">{{ status.status_name.name }} {% if status.fail_step and status.status_name.id != (1 or 5) %} => {{ status.fail_step }} {% endif %}</a></td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
+				{% if status.station %}<td><a href="{{ url_for('stations.station', id=status.station.id) | safe}}" title="{{status.station.ip | safe}}">{{ status.station.name }}</a></td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
+				{% if status.program_number %} <td>{{ status.program_number }}</td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
+				{% if status.nest_number %} <td>{{ status.nest_number }}</td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
+    			<td>{{ status.date_time }} </td>
+				{% if status.user %} <td><a href="{{  url_for('users.user', login=status.user.login) |safe}}" title="{{status.user.name | safe}}">{{ status.user.name }}</a></td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
+    			
+    			<!-- INLINE OPERATIONS START  -->
+    			<td>
+    				<table cellspacing="0"  class="tablesorter inline_operations">
+				        <tbody>
+							{% for operation in status.operations | sort (attribute='id') %}
+				    		<tr>
+	    		    			<td class="right"><a href="{{ url_for('operations.edit', id=operation.id) | safe}}" title="Edit operation {{operation.id | safe}}">{{ operation.id }}</a></td>
+				    			{% if operation.operation_status %} <td  {% if operation.operation_status.id == 2 %} id="red" {% endif %} {% if operation.operation_status.id == 1 %} id="green" {% endif %}><a href="{{ url_for('operation_statuses.operation_status', id=operation.operation_status.id) | safe}}" title="{{operation.operation_status.description | safe}}">{{ operation.operation_status.name }}</a></td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
+				    			{% if operation.operation_type %} <td><a href="{{ url_for('operation_types.operation_type', id=operation.operation_type.id )}}" title="{{operation.operation_type.description }}">{{ operation.operation_type.name | safe}}</a></td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
+				    			<td>{{ operation.date_time }} </td>
+				    			<td>
+				    				<table id="result" class="operation_data">
+							        	<tbody>
+										{% for result in operation.results %}
+						    				<tr>
+												<td class="value"><a href="{{ url_for('descriptions.description', id=result.desc_id )}}" title="{{result.desc.description }}">{{ result.desc.name | safe}}</a></td>
+						    					<td class="value">{{ "%s" % (result.value) }}</td>
+												<td class="value"><a href="{{ url_for('units.unit', id=result.unit_id )}}" title="{{result.unit.name }}">[{{ result.unit.symbol | safe}}]</a></td>
+												<!-- 
+												 -->
+												<td class="value"><a href="{{ url_for('types.type', id=result.type_id )}}" title="{{result.type.name }}">{{ result.type.symbol | safe}}</a></td>
+												<td class="value"><a href="{{ url_for('results.edit', id=result.id )}}" title="Edit result {{result.id }}">edit</a> <a href="{{ url_for('results.delete', id=result.id )}}" title="Delete result {{result.id }}">delete</a></td>
+						    				</tr>
+										{% endfor %}
+					    		        </tbody>
+				    				</table>
+				    			</td>
+							    <td>
+					    			{% if current_user.is_admin  %}
+				    		            <div id="operation-moderate-{{ operation.id }}" class="pull-right">
+							                <a class="btn btn-danger api-operation-delete" data-id="{{ operation.id }}" href="#"><span class="glyphicon glyphicon-trash"></span>{{ _('Delete') }}</a>
+				            			</div>
+				            			<div id="operation-deleted-{{ operation.id }}" class="pull-right" style="display: none;">
+				                			<span class="glyphicon glyphicon-trash"></span> <b>{{ _('Deleted') }}</b>
+				            			</div>
+						    		{% endif %}
+					    		</td>
+				    		</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+    			</td>
+    			<!-- INLINE OPERATIONS STOP  -->
+    			<td>
+	    			{% if current_user.is_admin  %}
+    		            <div id="status-moderate-{{ status.id }}" class="pull-right">
+			                <a class="btn btn-danger api-status-delete" data-id="{{ status.id }}" href="#"><span class="glyphicon glyphicon-trash"></span>{{ _('Delete') }}</a>
+            			</div>
+            			<div id="status-deleted-{{ status.id }}" class="pull-right" style="display: none;">
+                			<span class="glyphicon glyphicon-trash"></span> <b>{{ _('Deleted') }}</b>
+            			</div>
+		    		{% endif %}
+	    		</td>
+   			</tr>
+			{% endfor %}
+        </tbody>
+    </table>
+
 	<h3>{{ _('Status Overview') }}</h3>
 	<table cellspacing="0" id="statuses" class="tablesorter">
 		<thead>
@@ -180,6 +324,13 @@
 		                5: { sorter:'text' }
 		            }
 		        });
+		        $("inline_operations").tablesorter({
+		        	theme: 'blue',
+		        	sortList: [[5,1], [0,1]],  // sort by date on load
+		            headers: {
+		                4: { sorter:'text' } // force fourth column as text - see tablesorter bug: http://stackoverflow.com/questions/9733450/jquery-tablesorter-hyphen-bug
+		            }
+		        });		        
 		    }
 		);
 	</script>
