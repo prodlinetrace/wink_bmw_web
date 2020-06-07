@@ -11,7 +11,7 @@ from flask_login import UserMixin
 from . import db
 logger = logging.getLogger(__name__)
 
-__version__ = '0.1.4'
+__version__ = '0.1.5'
 
 try:
     from . import login_manager
@@ -145,6 +145,26 @@ class Product(db.Model):
             'id': self.id,
             'date_added': self.date_added,
         }
+
+    @property
+    def year(self):
+        """ Return year number """
+        return dateutil.parser.parse(str(self.date_added)).year
+
+    @property
+    def month(self):
+        """ Return month number """
+        return dateutil.parser.parse(str(self.date_added)).month
+
+    @property
+    def day(self):
+        """ Return day number """
+        return dateutil.parser.parse(str(self.date_added)).day
+
+    @property
+    def week(self):
+        """ Return week number """
+        return dateutil.parser.parse(str(self.date_added)).strftime("%V")
 
     @property
     def status_count(self):
