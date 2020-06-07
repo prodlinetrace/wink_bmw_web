@@ -5,6 +5,8 @@ from flask_paginate import Pagination
 from .. import db
 from ..models import Status
 from . import statuses
+from .forms import StatusForm
+
 
 @statuses.route('/')
 @login_required
@@ -31,3 +33,53 @@ def delete(id):
 
     # should never get here
     return render_template('statuses/index.html')
+
+@statuses.route('/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit(id):
+    status = Status.query.get_or_404(id)
+    if not current_user.is_admin:
+        abort(403)
+    form = StatusForm()
+    if form.validate_on_submit():
+        form.to_model(status)
+        db.session.add(status)
+        db.session.commit()
+        flash(gettext(u'Status profile for: {status} has been updated.'.format(status=status.id)))
+        return redirect(url_for('.index'))
+    else:
+        if form.errors:
+            flash(gettext("Validation failed"))
+        for field, errors in form.errors.items():
+            for error in errors:
+                flash(u"Error in the %s field - %s" % ( getattr(form, field).label.text, error))
+    form.from_model(status)
+    return render_template('statuses/edit.html', status=status, form=form)
+
+@statuses.route('/new', methods=['GET', 'POST'])
+@login_required
+def new():
+    if not current_user.is_admin:
+        abort(403)
+    _last_status_id = Status.query.order_by(Status.id.desc()).first()
+    i = 1
+    if _last_status_id is not None:
+        i = _last_status_id.id + 1
+
+    form = StatusForm(True, i)
+    if form.validate_on_submit():
+        # TODO check if this does not break PK constraints.
+        status = Status(i, 1, 1, 1, 1)
+        form.to_model(status)  # update status object with form data
+        db.session.add(status)
+        db.session.commit()
+        flash(gettext(u'New status: {status} was added successfully.'.format(status=status.id)))
+        return redirect(url_for('.index'))
+    else:
+        if form.errors:
+            flash(gettext("Validation failed"))
+        for field, errors in form.errors.items():
+            for error in errors:
+                flash(u"Error in the %s field - %s" % ( getattr(form, field).label.text, error))
+
+    return render_template('statuses/new.html', form=form)

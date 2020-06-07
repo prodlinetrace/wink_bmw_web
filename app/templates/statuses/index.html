@@ -2,7 +2,7 @@
 
 {% block page_content %}
 {% if current_user.is_admin %}
-	<a class="btn btn-primary pull-right" href="{{ url_for('statuses.index') }}">{{ _('New Status') }}</a>
+	<a class="btn btn-primary pull-right" href="{{ url_for('statuses.new') }}">{{ _('New Status') }}</a>
 {% endif %}
 
 <ul class="pager">
