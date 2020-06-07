@@ -6,7 +6,7 @@
 		<div id="product-deleted-{{ product.id }}" class="pull-right" style="display: none;">
    			<span class="glyphicon glyphicon-trash"></span> <b>{{ _('Deleted') }}</b>
 		</div>
-    	<a class="btn btn-danger pull-right" href="{{ url_for('products.edit_product', id=product.id) }}">{{ _('Edit') }}</a>
+    	<a class="btn pull-right glyphicon glyphicon-edit" href="{{ url_for('products.edit_product', id=product.id) }}">{{ _('') }}</a>
 
     {% endif %}
     <h2><a href="{{ url_for('products.product', id=product.id) }}">{{ product.id }} {{ product.id }}</a></h2>
