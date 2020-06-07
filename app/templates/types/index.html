@@ -3,7 +3,7 @@
 {% block page_content %}
 
 {% if current_user.is_admin %}
-	<a class="btn btn-primary pull-right" href="{{ url_for('types.new') }}">{{ _('New Unit') }}</a>
+	<a class="btn btn-primary pull-right" href="{{ url_for('types.new') }}">{{ _('New Type') }}</a>
 {% endif %}
 
 {% include "types/_types.html" %}
