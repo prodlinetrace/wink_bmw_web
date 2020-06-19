@@ -9,7 +9,7 @@
     	<a class="btn pull-right glyphicon glyphicon-edit" href="{{ url_for('products.edit_product', id=product.id) }}">{{ _('') }}</a>
 
     {% endif %}
-    <h2><a href="{{ url_for('products.product', id=product.id) }}">{{ product.id }} {{ product.id }}</a></h2>
+    <h2><a href="{{ url_for('products.product', id=product.id) }}">{{ product.id }}</a></h2>
     <h3>{{ product.description }}</h3>
     {% if config.COMMENTS %}
     <div class="pull-right"><a href="{{ url_for('products.product', id=product.id) }}#comments"><span class="label label-default">{{ _('Comments') }}: {{ product.comments.count() }}</span></a></div>

@@ -148,7 +148,7 @@
 										{% for result in operation.results %}
 						    				<tr>
 												<td class="value"><a href="{{ url_for('descriptions.description', id=result.desc_id )}}" title="{{result.desc.description }}">{{ result.desc.name | safe}}</a></td>
-						    					<td class="value">{{ "%s" % (result.value) }}</td>
+						    					<td class="value">{{ result.value | float |round(5) }}</td>
 												<td class="value"><a href="{{ url_for('units.unit', id=result.unit_id )}}" title="{{result.unit.name }}">[{{ result.unit.symbol | safe}}]</a></td>
 												<!-- 
 												 -->
@@ -279,7 +279,7 @@
 						{% for result in operation.results %}
 		    				<tr>
 								<td class=""><a href="{{ url_for('descriptions.description', id=result.desc_id )}}" title="{{result.desc.description }}">{{ result.desc.name | safe}}</a></td>
-		    					<td class="">{{ "%s" % (result.value) }}</td>
+		    					<td class="">{{ result.value | float |round(5) }}</td>
 								<td class=""><a href="{{ url_for('units.unit', id=result.unit_id )}}" title="{{result.unit.name }}">[{{ result.unit.symbol | safe}}]</a></td>
 								<td class="value"><a href="{{ url_for('types.type', id=result.type_id )}}" title="{{result.type.name }}">{{ result.type.name | safe}}</a></td>
 								<td class="extras">
