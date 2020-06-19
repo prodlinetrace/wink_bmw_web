@@ -8,7 +8,8 @@
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 <script src="{{ url_for('static', filename='jquery-latest.js') }}"></script>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='theme.blue.css') }}">
-
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='datatables.min.css') }}">
+<script src="{{ url_for('static', filename='datatables.min.js') }}"></script>
 
 {% endblock %}
 
@@ -74,7 +75,7 @@
 </div>.
 <div id="footer">
     {% block footer %}
-  	    {{ config.NAME }} v:{{ config.VERSION }} (dbmodel:{{ config.DBMODEL_VERSION }}) <a href="{{ url_for('statistics.index') }}">{{ _('stat') }}</a> &copy; <a href="mailto:Piot.Wilkosz@gmail.com">Piotr Wilkosz</a> 2018.
+  	    {{ config.NAME }} v:{{ config.VERSION }} (dbmodel:{{ config.DBMODEL_VERSION }}) <a href="{{ url_for('statistics.index') }}">{{ _('stat') }}</a> &copy; <a href="mailto:Piot.Wilkosz@gmail.com">Piotr Wilkosz</a> 2020.
     {% endblock %}
 </div>
 {% endblock %}
