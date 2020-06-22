@@ -149,13 +149,11 @@
 						    				<tr>
 												<td class="value"><a href="{{ url_for('descriptions.description', id=result.desc_id )}}" title="{{result.desc.description }}">{{ result.desc.name | safe}}</a></td>
 												{% if result.unit.id == 0 or  result.unit.id == 99 %}
-													<td class="">{{ result.value }}</td>
+													<td class="value">{{ result.value }}</td>
 												{% else %}
-													<td class="">{{ result.value | float |round(5) }}</td>
+													<td class="value">{{ result.value | float |round(5) }}</td>
 												{% endif %}
 												<td class="value"><a href="{{ url_for('units.unit', id=result.unit_id )}}" title="{{result.unit.name }}">[{{ result.unit.symbol | safe}}]</a></td>
-												<!-- 
-												 -->
 												<td class="value"><a href="{{ url_for('types.type', id=result.type_id )}}" title="{{result.type.name }}">{{ result.type.name | safe}}</a></td>
 												<td class="value">
 								    			{% if current_user.is_admin  %}
@@ -282,15 +280,15 @@
 			        	<tbody>
 						{% for result in operation.results %}
 		    				<tr>
-								<td class=""><a href="{{ url_for('descriptions.description', id=result.desc_id )}}" title="{{result.desc.description }}">{{ result.desc.name | safe}}</a></td>
+								<td class="value"><a href="{{ url_for('descriptions.description', id=result.desc_id )}}" title="{{result.desc.description }}">{{ result.desc.name | safe}}</a></td>
 								{% if result.unit.id == 0 or  result.unit.id == 99 %}
-									<td class="">{{ result.value }}</td>
+									<td class="value">{{ result.value }}</td>
 								{% else %}
-									<td class="">{{ result.value | float |round(5) }}</td>
+									<td class="value">{{ result.value | float |round(5) }}</td>
 								{% endif %}
-								<td class=""><a href="{{ url_for('units.unit', id=result.unit_id )}}" title="{{result.unit.name }}">[{{ result.unit.symbol | safe}}]</a></td>
+								<td class="value"><a href="{{ url_for('units.unit', id=result.unit_id )}}" title="{{result.unit.name }}">[{{ result.unit.symbol | safe}}]</a></td>
 								<td class="value"><a href="{{ url_for('types.type', id=result.type_id )}}" title="{{result.type.name }}">{{ result.type.name | safe}}</a></td>
-								<td class="extras">
+								<td class="value">
 				    			{% if current_user.is_admin  %}
 				    				<div style="width: 80px" class="pull-right">
 					    				<a href="{{ url_for('results.edit', id=result.id )}}" title="Edit result {{result.id }}" class="btn glyphicon glyphicon-edit">{{ _('') }}</a>
