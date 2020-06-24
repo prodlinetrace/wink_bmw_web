@@ -33,9 +33,10 @@
 
 	<script type="text/javascript">
 		$(document).ready( function () {
-		    $('#products').DataTable( {
+		    var products = $('#products').DataTable( {
 		    	"pageLength": 50
     		 } );
+			products.order([1, 'desc']).draw();
 		} );
 	</script>
 	<!--
