@@ -141,32 +141,34 @@
 	    		    			<td class="right"><a href="{{ url_for('operations.edit', id=operation.id) | safe}}" title="Edit operation {{operation.id | safe}}">{{ operation.id }}</a></td>
 				    			{% if operation.operation_status %} <td  {% if operation.operation_status.id == 2 %} id="red" {% endif %} {% if operation.operation_status.id == 1 %} id="green" {% endif %}><a href="{{ url_for('operation_statuses.operation_status', id=operation.operation_status.id) | safe}}" title="{{operation.operation_status.description | safe}}">{{ operation.operation_status.name }}</a></td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
 				    			{% if operation.operation_type %} <td><a href="{{ url_for('operation_types.operation_type', id=operation.operation_type.id )}}" title="{{operation.operation_type.description }}">{{ operation.operation_type.name | safe}}</a></td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
-				    			<td>{{ operation.date_time }} </td>
+								<td>{{ operation.date_time }} </td>
 				    			<td>
 				    				<table id="results" class="operation_data">
 							        	<tbody>
 										{% for result in operation.results %}
-						    				<tr>
-												<td class="value"><a href="{{ url_for('descriptions.description', id=result.desc_id )}}" title="{{result.desc.description }}">{{ result.desc.name | safe}}</a></td>
-												{% if result.unit.id == 0 or  result.unit.id == 99 %}
-													<td class="value">{{ result.value }}</td>
-												{% else %}
-													<td class="value">{{ result.value | float |round(5) }}</td>
-												{% endif %}
-												<td class="value"><a href="{{ url_for('units.unit', id=result.unit_id )}}" title="{{result.unit.name }}">[{{ result.unit.symbol | safe}}]</a></td>
-												<td class="value"><a href="{{ url_for('types.type', id=result.type_id )}}" title="{{result.type.name }}">{{ result.type.name | safe}}</a></td>
-												<td class="value">
-								    			{% if current_user.is_admin  %}
-								    				<a href="{{ url_for('results.edit', id=result.id )}}" title="Edit result {{result.id }}" class="btn glyphicon glyphicon-edit">{{ _('') }}</a>
-								    				<div id="result-moderate-{{ result.id }}" class="pull-right">
-														<a class="btn btn-danger api-result-delete" data-id="{{ result.id }}" href="#"><span class="glyphicon glyphicon-trash"></span>{{ _('') }}</a>
-													</div>
-							            			<div id="result-deleted-{{ result.id }}" class="pull-right" style="display: none;">
-							                			<span class="glyphicon glyphicon-trash"></span> <b>{{ _('Deleted') }}</b>
-				        			    			</div>
-												{% endif %}
-												</td>
-						    				</tr>
+											{% if result.desc.description != 'NO_DISPLAY' %}
+												<tr>
+													<td class="value"><a href="{{ url_for('descriptions.description', id=result.desc_id )}}" title="{{result.desc.description }}">{{ result.desc.name | safe }}</a></td>
+													<td class="value">
+														{{ result.value_formatted | safe }}
+													</td>
+													<td class="value">
+														<a href="{{ url_for('units.unit', id=result.unit_id )}}" title="{{result.unit.name }}">[{{ result.unit.symbol | safe}}] 
+														<a href="{{ url_for('types.type', id=result.type_id )}}" title="{{result.type.name }}">{{ result.type.name | safe}}</a>
+													</td>
+													<td class="value">
+													{% if current_user.is_admin  %}
+														<a href="{{ url_for('results.edit', id=result.id )}}" title="Edit result {{result.id }}" class="btn glyphicon glyphicon-edit">{{ _('') }}</a>
+														<div id="result-moderate-{{ result.id }}" class="pull-right">
+															<a class="btn btn-danger api-result-delete" data-id="{{ result.id }}" href="#"><span class="glyphicon glyphicon-trash"></span>{{ _('') }}</a>
+														</div>
+														<div id="result-deleted-{{ result.id }}" class="pull-right" style="display: none;">
+															<span class="glyphicon glyphicon-trash"></span> <b>{{ _('Deleted') }}</b>
+														</div>
+													{% endif %}
+													</td>
+												</tr
+											{% endif %}>
 										{% endfor %}
 					    		        </tbody>
 				    				</table>
@@ -277,33 +279,34 @@
     			<td>{{ operation.date_time }} </td>
     			<td>
     				<table id="result" class="operation_data">
-			        	<tbody>
-						{% for result in operation.results %}
-		    				<tr>
-								<td class="value"><a href="{{ url_for('descriptions.description', id=result.desc_id )}}" title="{{result.desc.description }}">{{ result.desc.name | safe}}</a></td>
-								{% if result.unit.id == 0 or  result.unit.id == 99 %}
-									<td class="value">{{ result.value }}</td>
-								{% else %}
-									<td class="value">{{ result.value | float |round(5) }}</td>
-								{% endif %}
-								<td class="value"><a href="{{ url_for('units.unit', id=result.unit_id )}}" title="{{result.unit.name }}">[{{ result.unit.symbol | safe}}]</a></td>
-								<td class="value"><a href="{{ url_for('types.type', id=result.type_id )}}" title="{{result.type.name }}">{{ result.type.name | safe}}</a></td>
-								<td class="value">
-				    			{% if current_user.is_admin  %}
-				    				<div style="width: 80px" class="pull-right">
-					    				<a href="{{ url_for('results.edit', id=result.id )}}" title="Edit result {{result.id }}" class="btn glyphicon glyphicon-edit">{{ _('') }}</a>
-					    				<div id="result-moderate-{{ result.id }}" class="pull-right">
-											<a class="btn btn-danger api-result-delete" data-id="{{ result.id }}" href="#"><span class="glyphicon glyphicon-trash"></span>{{ _('') }}</a>
-										</div>
-				            			<div id="result-deleted-{{ result.id }}" class="pull-right" style="display: none;">
-				                			<span class="glyphicon glyphicon-trash"></span> <b>{{ _('Deleted') }}</b>
-	        			    			</div>
-	        			    		</div>
-								{% endif %}
-								</td>
-		    				</tr>
-						{% endfor %}
-	    		        </tbody>
+						
+						<tbody>
+							{% for result in operation.results %}
+								{% if result.desc.description != 'NO_DISPLAY' %}
+									<tr>
+										<td class="value"><a href="{{ url_for('descriptions.description', id=result.desc_id )}}" title="{{result.desc.description }}">{{ result.desc.name | safe }}</a></td>
+										<td class="value">
+											{{ result.value_formatted | safe }}
+										</td>
+										<td class="value">
+											<a href="{{ url_for('units.unit', id=result.unit_id )}}" title="{{result.unit.name }}">[{{ result.unit.symbol | safe}}] 
+											<a href="{{ url_for('types.type', id=result.type_id )}}" title="{{result.type.name }}">{{ result.type.name | safe}}</a>
+										</td>
+										<td class="value">
+										{% if current_user.is_admin  %}
+											<a href="{{ url_for('results.edit', id=result.id )}}" title="Edit result {{result.id }}" class="btn glyphicon glyphicon-edit">{{ _('') }}</a>
+											<div id="result-moderate-{{ result.id }}" class="pull-right">
+												<a class="btn btn-danger api-result-delete" data-id="{{ result.id }}" href="#"><span class="glyphicon glyphicon-trash"></span>{{ _('') }}</a>
+											</div>
+											<div id="result-deleted-{{ result.id }}" class="pull-right" style="display: none;">
+												<span class="glyphicon glyphicon-trash"></span> <b>{{ _('Deleted') }}</b>
+											</div>
+										{% endif %}
+										</td>
+									</tr
+								{% endif %}>
+							{% endfor %}
+							</tbody>
     				</table>
     			</td>
 			    <td>

@@ -1,6 +1,7 @@
 <tr>
 	<td class="id right"><a href="{{ url_for('descriptions.edit', id=description.id) }}">{{ description.id }}</a></td>
 	<td><a href="{{ url_for('descriptions.description', id=description.id) }}">{{ description.name }}</a></td>
+	<td>{{ description.display_format }}</td>
 	<td>{{ description.description }}</td>
 	<td class="extras">
 	    {% if current_user.is_admin  %}
