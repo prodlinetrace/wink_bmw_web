@@ -3,7 +3,7 @@ from flask import Blueprint, request, g
 webapi = Blueprint('webapi', __name__)
 
 from ..models import User
-from . import comments, errors, operations, products, statuses
+from . import comments, errors, operations, products, statuses, results
 
 
 @webapi.before_request

@@ -51,6 +51,18 @@
         });
         return false;
     });
+    $('.api-result-delete').click(function() {
+        id = $(this).data('id');
+        url = location.protocol + '//' + location.host + '/webapi/1.0/results/' + id
+        api('/results/' + id, 'DELETE', {}, function() {
+            $('#result-moderate-' + id).hide();
+            $('#result-deleted-' + id).show();
+        },
+        function(jqXHR, textStatus, errorThrown) {
+            alert('Error: ' + errorThrown);
+        });
+        return false;
+    });
     $('.api-status-delete').click(function() {
         id = $(this).data('id');
         url = location.protocol + '//' + location.host + '/webapi/1.0/statuses/' + id
