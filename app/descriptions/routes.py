@@ -29,7 +29,7 @@ def new():
     _last_description_id = Desc.query.first()
     id = 1
     if _last_description_id is not None:
-        id = _last_description_id.id + str(1)
+        id = _last_description_id.id + 1
     form = DescriptionForm()
     if form.validate_on_submit():
         description = Desc(id)
