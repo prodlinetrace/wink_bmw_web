@@ -25,14 +25,14 @@
 	$(function() {
         $("#stations")
         .tablesorter({
-        	theme: 'blue',
-            	sortList: [[0,0]],  // sort by in on load (ascending)
-        		widgets: ["zebra", "filter"],
-            	widgetOptions: {
-            	      filter_columnFilters: true,
-            	      filter_placeholder: { search : 'Filter...' },
-            	      filter_reset: '.reset'
-              	}
+			theme: 'blue',
+			sortList: [[0,0]],  // sort by in on load (ascending)
+			widgets: ["zebra", "filter"],
+			widgetOptions: {
+					filter_columnFilters: true,
+					filter_placeholder: { search : 'Filter...' },
+					filter_reset: '.reset'
+			}
         });
 
 	});
