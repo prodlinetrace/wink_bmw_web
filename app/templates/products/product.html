@@ -158,9 +158,9 @@
 													</td>
 													<td class="value">
 													{% if current_user.is_admin  %}
-														<a href="{{ url_for('results.edit', id=result.id )}}" title="Edit result {{result.id }}" class="btn glyphicon glyphicon-edit">{{ _('') }}</a>
+														<a href="{{ url_for('results.edit', id=result.id )}}" title="Edit result {{result.id }}" class="btn glyphicon glyphicon-edit"></a>
 														<div id="result-moderate-{{ result.id }}" class="pull-right">
-															<a class="btn btn-danger api-result-delete" data-id="{{ result.id }}" href="#"><span class="glyphicon glyphicon-trash"></span>{{ _('') }}</a>
+															<a class="btn btn-danger api-result-delete" data-id="{{ result.id }}" href="#"><span class="glyphicon glyphicon-trash"></span></a>
 														</div>
 														<div id="result-deleted-{{ result.id }}" class="pull-right" style="display: none;">
 															<span class="glyphicon glyphicon-trash"></span> <b>{{ _('Deleted') }}</b>
@@ -176,9 +176,9 @@
 							    <td class="" >
 					    			{% if current_user.is_admin  %}
 					    				<div style="width: 80px" class="pull-right">
-						    				<a href="{{ url_for('operations.edit', id=operation.id )}}" title="Edit Operation {{operation.id }}" class="btn glyphicon glyphicon-edit">{{ _('') }}</a>
+						    				<a href="{{ url_for('operations.edit', id=operation.id )}}" title="Edit Operation {{operation.id }}" class="btn glyphicon glyphicon-edit"></a>
 					    		            <div id="operation-moderate-{{ operation.id }}" class="pull-right">
-								                <a class="btn btn-danger api-operation-delete" data-id="{{ operation.id }}" href="#"><span class="glyphicon glyphicon-trash"></span>{{ _('') }}</a>
+								                <a class="btn btn-danger api-operation-delete" data-id="{{ operation.id }}" href="#"><span class="glyphicon glyphicon-trash"></span></a>
 					            			</div>
 					            			<div id="operation-deleted-{{ operation.id }}" class="pull-right" style="display: none;">
 					                			<span class="glyphicon glyphicon-trash"></span> <b>{{ _('Deleted') }}</b>
@@ -195,9 +195,9 @@
     			<td class="value">
 	    			{% if current_user.is_admin  %}
 	    				<div style="width: 80px" class="pull-right">
-		    				<a href="{{ url_for('statuses.edit', id=status.id )}}" title="Edit status {{status.id }}" class="btn glyphicon glyphicon-edit">{{ _('') }}</a>
+		    				<a href="{{ url_for('statuses.edit', id=status.id )}}" title="Edit status {{status.id }}" class="btn glyphicon glyphicon-edit"></a>
 	    		            <div id="status-moderate-{{ status.id }}" class="pull-right">
-				                <a class="btn btn-danger api-status-delete" data-id="{{ status.id }}" href="#"><span class="glyphicon glyphicon-trash"></span>{{ _('') }}</a>
+				                <a class="btn btn-danger api-status-delete" data-id="{{ status.id }}" href="#"><span class="glyphicon glyphicon-trash"></span></a>
 	            			</div>
 	            			<div id="status-deleted-{{ status.id }}" class="pull-right" style="display: none;">
 	                			<span class="glyphicon glyphicon-trash"></span> <b>{{ _('Deleted') }}</b>
@@ -237,9 +237,9 @@
     			<td>
 	    			{% if current_user.is_admin  %}
 	    				<div style="width: 80px" class="pull-right">
-					    	<a href="{{ url_for('statuses.edit', id=status.id )}}" title="Edit status {{status.id }}" class="btn glyphicon glyphicon-edit">{{ _('') }}</a>
+					    	<a href="{{ url_for('statuses.edit', id=status.id )}}" title="Edit status {{status.id }}" class="btn glyphicon glyphicon-edit"></a>
 	    		            <div id="status-moderate-{{ status.id }}" class="pull-right">
-				                <a class="btn btn-danger api-status-delete" data-id="{{ status.id }}" href="#"><span class="glyphicon glyphicon-trash"></span>{{ _('') }}</a>
+				                <a class="btn btn-danger api-status-delete" data-id="{{ status.id }}" href="#"><span class="glyphicon glyphicon-trash"></span></a>
 	            			</div>
 	            			<div id="status-deleted-{{ status.id }}" class="pull-right" style="display: none;">
 	                			<span class="glyphicon glyphicon-trash"></span> <b>{{ _('Deleted') }}</b>
@@ -294,9 +294,9 @@
 										</td>
 										<td class="value">
 										{% if current_user.is_admin  %}
-											<a href="{{ url_for('results.edit', id=result.id )}}" title="Edit result {{result.id }}" class="btn glyphicon glyphicon-edit">{{ _('') }}</a>
+											<a href="{{ url_for('results.edit', id=result.id )}}" title="Edit result {{result.id }}" class="btn glyphicon glyphicon-edit"></a>
 											<div id="result-moderate-{{ result.id }}" class="pull-right">
-												<a class="btn btn-danger api-result-delete" data-id="{{ result.id }}" href="#"><span class="glyphicon glyphicon-trash"></span>{{ _('') }}</a>
+												<a class="btn btn-danger api-result-delete" data-id="{{ result.id }}" href="#"><span class="glyphicon glyphicon-trash"></span></a>
 											</div>
 											<div id="result-deleted-{{ result.id }}" class="pull-right" style="display: none;">
 												<span class="glyphicon glyphicon-trash"></span> <b>{{ _('Deleted') }}</b>
@@ -313,12 +313,12 @@
 	    			{% if current_user.is_admin  %}
 	    				<div style="width: 80px" class="pull-right">
 	    		            <div id="operation-moderate-{{ operation.id }}" class="pull-right">
-				                <a class="btn btn-danger api-operation-delete" data-id="{{ operation.id }}" href="#"><span class="glyphicon glyphicon-trash"></span>{{ _('') }}</a>
+				                <a class="btn btn-danger api-operation-delete" data-id="{{ operation.id }}" href="#"><span class="glyphicon glyphicon-trash"></span></a>
 	            			</div>
 	            			<div id="operation-deleted-{{ operation.id }}" class="pull-right" style="display: none;">
 	                			<span class="glyphicon glyphicon-trash"></span> <b>{{ _('Deleted') }}</b>
 	            			</div>
-		    				<a href="{{ url_for('operations.edit', id=operation.id )}}" title="Edit Operation {{operation.id }}" class="btn glyphicon glyphicon-edit">{{ _('') }}</a>
+		    				<a href="{{ url_for('operations.edit', id=operation.id )}}" title="Edit Operation {{operation.id }}" class="btn glyphicon glyphicon-edit"></a>
 		    			</div>
 		    		{% endif %}
 	    		</td>

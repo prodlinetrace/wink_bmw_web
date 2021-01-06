@@ -18,7 +18,7 @@ class Config:
     SQLALCHEMY_DATABASE_URI_PREFIX = 'sqlite:///'
     BOOTSTRAP_SERVE_LOCAL = True
     LANGUAGES = (('en', 'English'), ('pl', 'Polish'))
-    VERSION = '0.0.5'
+    VERSION = '0.0.6'
     DBMODEL_VERSION = "None"
     BABEL_DEFAULT_LOCALE = 'pl'
     MODE = False
@@ -43,8 +43,8 @@ class DevelopmentConfig(Config):
     MODE = "development"
     SECRET_KEY = os.environ.get('SECRET_KEY') or 't0p s3cr3t'
     WTF_CSRF_SECRET_KEY = SECRET_KEY
-    #SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or 'mysql+pymysql://trace:trace@127.0.0.1/trace?autocommit=true'
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or 'mysql+pymysql://trace:trace@127.0.0.1/trace?autocommit=true'
+    #SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
     PRODUCTS_PER_PAGE = 50
 
 

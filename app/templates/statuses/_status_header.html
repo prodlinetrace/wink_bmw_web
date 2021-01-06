@@ -4,12 +4,12 @@
 	<td>
 		{% if current_user.is_admin  %}
 	        <div id="status-moderate-{{ status.id }}" class="pull-right">
-	            <a class="btn btn-danger api-status-delete" data-id="{{ status.id }}" href="#"><span class="glyphicon glyphicon-trash"></span>{{ _('') }}</a>
+	            <a class="btn btn-danger api-status-delete" data-id="{{ status.id }}" href="#"><span class="glyphicon glyphicon-trash"></span></a>
    			</div>
    			<div id="status-deleted-{{ status.id }}" class="pull-right" style="display: none;">
        			<span class="glyphicon glyphicon-trash"></span> <b>{{ _('Deleted') }}</b>
    			</div>
-   			<a class="btn pull-right glyphicon glyphicon-edit" href="{{ url_for('statuses.edit', id=status.id) }}">{{ _('') }}</a>
+   			<a class="btn pull-right glyphicon glyphicon-edit" href="{{ url_for('statuses.edit', id=status.id) }}"></a>
 		{% endif %}
     </td>
 </tr>

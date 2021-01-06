@@ -30,12 +30,12 @@
    			<td class="extras">
    				{% if current_user.is_admin %}
 			        <div id="product-moderate-{{ product.id }}" class="pull-right">
-			            <a class="btn btn-danger api-product-delete" data-id="{{ product.id }}" href="#"><span class="glyphicon glyphicon-trash"></span>{{ _('') }}</a>
+			            <a class="btn btn-danger api-product-delete" data-id="{{ product.id }}" href="#"><span class="glyphicon glyphicon-trash"></span></a>
 		   			</div>
 		   			<div id="product-deleted-{{ product.id }}" class="pull-right" style="display: none;">
 		       			<span class="glyphicon glyphicon-trash"></span> <b>{{ _('Deleted') }}</b>
 		   			</div>
-   					<a class="btn pull-right glyphicon glyphicon-edit" href="{{ url_for('products.edit_product', id=product.id) }}">{{ _('') }}</a>
+   					<a class="btn pull-right glyphicon glyphicon-edit" href="{{ url_for('products.edit_product', id=product.id) }}"></a>
    				{% endif %}
    			</td>
 		</tr>
