@@ -1,0 +1,12 @@
+<tr>
+	<td class="right"><a href="{{ url_for('queues.edit', id=queue.id) }}">{{ queue.id }}</a></td>
+	<td class="left"><a href="{{ url_for('queues.queue', id=queue.id) }}">{{ queue.name }}</a></td>
+	<td class="right">{{ queue.name }}</td>
+	<td class="right">{{ queue.product_id }}</td>
+	<td>
+	    {% if current_user.is_admin %}
+	    <a class="btn btn-danger pull-right" href="{{ url_for('queues.delete', id=queue.id) }}">{{ _('Delete') }} </a>
+	    <a class="btn btn-primary pull-right" href="{{ url_for('queues.edit', id=queue.id) }}">{{ _('Edit') }} </a>
+	    {% endif %}
+	</td>
+</tr>

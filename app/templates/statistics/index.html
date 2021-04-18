@@ -94,4 +94,43 @@
 	</tbody>
 </table>
 
+<h3>
+	{{ _('Queues') }}:
+	<br/>
+	</h3>
+	
+	<table cellspacing="0" class="tablesorter">
+		<thead>
+			<tr>
+			   <th>{{ _('Parameter') }}</th>
+			   <th>{{ _('Value') }}</th>
+		   </tr>
+		</thead>
+		<tbody>
+			<tr><td> {{ _('Queue 1 Next Product') }} </td><td> {{ queues.filter_by(name='q1').first().product_id }} </td></tr>
+			<tr><td> {{ _('Queue 1 Count') }} </td><td> {{ queues.filter_by(name='q1').count() }} </td></tr>
+			<tr>
+				<td> {{ _('Queue 1 Data Dump') }} </td>
+				<td>
+					{% for item in queues.filter_by(name='q1').all() %}
+						<span>Product: {{ item.product_id }}</span>
+						<span>Date: {{ item.date_added }}</span>
+						<span>Id: {{ item.id }}</span><br/>
+					{% endfor %}
+				</td> 
+			</tr>		
+			<tr><td> {{ _('Queue 2 Next Product') }} </td><td> {{ queues.filter_by(name='q2').first().product_id }}</td></tr>
+			<tr><td> {{ _('Queue 2 Count') }} </td><td> {{ queues.filter_by(name='q2').count() }}</td></tr>
+			<tr>
+					<td> {{ _('Queue 2 Data Dump') }} </td>
+					<td>
+						{% for item in queues.filter_by(name='q2').all() %}
+							<span>Product: {{ item.product_id }}</span>
+							<span>Date: {{ item.date_added }}</span>
+							<span>Id: {{ item.id }}</span><br/>
+						{% endfor %}
+					</td> 
+			</tr>
+		</tbody>
+	</table>
 {% endblock %}

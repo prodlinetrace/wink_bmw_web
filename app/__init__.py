@@ -91,6 +91,9 @@ def create_app(config_name):
     from .statuses import statuses as statuses_blueprint
     app.register_blueprint(statuses_blueprint, url_prefix='/app/statuses')
 
+    from .queues import queues as queues_blueprint
+    app.register_blueprint(queues_blueprint, url_prefix='/app/queues')
+
     from .units import units as units_blueprint
     app.register_blueprint(units_blueprint, url_prefix='/app/units')
 

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="page-header queue-profile">
+    {% if current_user.is_admin %}<a class="btn btn-default pull-right" href="{{ url_for('queues.edit', id=queue.id) }}">{{ _('Edit') }}</a>{% endif %}
+    <h1>{{ _('Details for') }}: {{ queue.name }}</h1>
+    <p>
+    	<ul>
+	    	{% if queue.id %}<p>{{ _('Id') }}: {{ queue.id }}</p>{% endif %}
+	    	{% if queue.name %}<p>{{ _('Name') }}: {{ queue.name }}</p>{% endif %}
+	    	{% if queue.ip %}<p>{{ _('IP Address') }}: {{ queue.ip }}</p>{% endif %}
+	    	{% if queue.port %}<p>{{ _('Port') }}: {{ queue.port }}</p>{% endif %}
+	    	<p>{{ _('Rack') }}: {{ queue.rack }}</p>
+	    	<p>{{ _('Slot') }}: {{ queue.slot }}</p>
+    	</ul>
+    </p>
+</div>
+{% endblock %}
