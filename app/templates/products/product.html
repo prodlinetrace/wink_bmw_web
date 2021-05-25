@@ -125,7 +125,7 @@
 			{% for status in product.statuses %}
    			<tr>
    				<td class="right">{{ status.id }}</td>
-				{% if status.status_name %} <td {% if status.status_name.id == 2 %} id="red" {% endif %} {% if status.status_name.id == 1 %} id="green" {% endif %}><a href="{{ url_for('operation_statuses.operation_status', id=status.status_name.id) | safe}}" title="{{status.status_name.description | safe}}">{{ status.status_name.name }} {% if status.fail_step and status.status_name.id != (1 or 5) %} => {{ status.fail_step }} {% endif %}</a></td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
+				{% if status.status_name %} <td {% if status.status_name.id in [2, 14, 15, 16] %} id="red" {% endif %} {% if status.status_name.id == 1 %} id="green" {% endif %}><a href="{{ url_for('operation_statuses.operation_status', id=status.status_name.id) | safe}}" title="{{status.status_name.description | safe}}">{{ status.status_name.name }} {% if status.fail_step and status.status_name.id != (1 or 5) %} => {{ status.fail_step }} {% endif %}</a></td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
 				{% if status.station %}<td><a href="{{ url_for('stations.station', id=status.station.id) | safe}}" title="{{status.station.ip | safe}}">{{ status.station.name }}</a></td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
 				{% if status.program_number %} <td>{{ status.program_number }}</td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
 				{% if status.nest_number %} <td>{{ status.nest_number }}</td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
@@ -139,7 +139,7 @@
 							{% for operation in status.operations | sort (attribute='id') %}
 				    		<tr>
 	    		    			<td class="right"><a href="{{ url_for('operations.edit', id=operation.id) | safe}}" title="Edit operation {{operation.id | safe}}">{{ operation.id }}</a></td>
-				    			{% if operation.operation_status %} <td  {% if operation.operation_status.id == 2 %} id="red" {% endif %} {% if operation.operation_status.id == 1 %} id="green" {% endif %}><a href="{{ url_for('operation_statuses.operation_status', id=operation.operation_status.id) | safe}}" title="{{operation.operation_status.description | safe}}">{{ operation.operation_status.name }}</a></td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
+				    			{% if operation.operation_status %} <td  {% if operation.operation_status.id in [2, 14, 15, 16] %} id="red" {% endif %} {% if operation.operation_status.id == 1 %} id="green" {% endif %}><a href="{{ url_for('operation_statuses.operation_status', id=operation.operation_status.id) | safe}}" title="{{operation.operation_status.description | safe}}">{{ operation.operation_status.name }}</a></td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
 				    			{% if operation.operation_type %} <td><a href="{{ url_for('operation_types.operation_type', id=operation.operation_type.id )}}" title="{{operation.operation_type.description }}">{{ operation.operation_type.name | safe}}</a></td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
 								<td>{{ operation.date_time }} </td>
 				    			<td>
@@ -229,7 +229,7 @@
    			<tr>
    				<td class="right">{{ status.id }}</td>
 				{% if status.station %}<td><a href="{{ url_for('stations.station', id=status.station.id) | safe}}" title="{{status.station.ip | safe}}">{{ status.station.name }}</a></td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
-				{% if status.status_name %} <td {% if status.status_name.id == 2 %} id="red" {% endif %} {% if status.status_name.id == 1 %} id="green" {% endif %}><a href="{{ url_for('operation_statuses.operation_status', id=status.status_name.id) | safe}}" title="{{status.status_name.description | safe}}">{{ status.status_name.name }}</a></td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
+				{% if status.status_name %} <td {% if status.status_name.id in [2, 14, 15, 16] %} id="red" {% endif %} {% if status.status_name.id == 1 %} id="green" {% endif %}><a href="{{ url_for('operation_statuses.operation_status', id=status.status_name.id) | safe}}" title="{{status.status_name.description | safe}}">{{ status.status_name.name }}</a></td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
 				{% if status.program_number %} <td>{{ status.program_number }}</td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
 				{% if status.nest_number %} <td>{{ status.nest_number }}</td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
     			<td>{{ status.date_time }} </td>
@@ -272,7 +272,7 @@
     		<tr>
     			<td class="right"><a href="{{ url_for('operations.edit', id=operation.id) | safe}}" title="Edit operation {{operation.id | safe}}">{{ operation.id }}</a></td>
     			{% if operation.station %}<td><a href="{{ url_for('stations.station', id=operation.station.id) | safe}}" title="{{operation.station.ip | safe}}">{{ operation.station.name }}</a></td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
-    			{% if operation.operation_status %} <td  {% if operation.operation_status.id == 2 %} id="red" {% endif %} {% if operation.operation_status.id == 1 %} id="green" {% endif %}><a href="{{ url_for('operation_statuses.operation_status', id=operation.operation_status.id) | safe}}" title="{{operation.operation_status.description | safe}}">{{ operation.operation_status.name }}</a></td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
+    			{% if operation.operation_status %} <td  {% if operation.operation_status.id in [2, 14, 15, 16] %} id="red" {% endif %} {% if operation.operation_status.id == 1 %} id="green" {% endif %}><a href="{{ url_for('operation_statuses.operation_status', id=operation.operation_status.id) | safe}}" title="{{operation.operation_status.description | safe}}">{{ operation.operation_status.name }}</a></td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
     			{% if operation.operation_type %} <td><a href="{{ url_for('operation_types.operation_type', id=operation.operation_type.id )}}" title="{{operation.operation_type.description }}">{{ operation.operation_type.name | safe}}</a></td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
     			{% if operation.program_number %} <td>{{ operation.program_number | safe}}</td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
     			{% if operation.nest_number %} <td>{{ operation.nest_number | safe}}</td> {% else %} <td>{{ _('undefined value') }}</td> {% endif %}
