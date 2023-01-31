@@ -70,19 +70,23 @@ def download(start_date=None, end_date=None, status=None, operation=None):
         # include in the list in case one of operations is equal to searched operation_id
         query = query.filter(Product.operations.any(Operation.operation_status_id==operation))
 
-    csv_header = ['Id', 'Date Added', 'Success Statuses', 'Failed Statuses', 'Success Operations', 'Failed Operations']
+    csv_header = ['Id', 'Date Added', 'DMC', 'Success Statuses', 'Failed Statuses', 'Success Operations', 'Failed Operations']
     buffer = StringIO()
     writer = csv.writer(buffer, delimiter=',')
     writer.writerow(csv_header)
 
     products = query.order_by(Product.date_added.desc()).all()
+    
     for product in products:
-        row = ["{id}".format(id=product.id), " {date}".format(date=product.date_added)]
+        row = []
+        row.append("{id}".format(id=product.id))
+        row.append("{date}".format(date=product.date_added))
+        row.append(product.dmc)
         row.append(product.statuses.filter(Status.status==1).count())
         row.append(product.statuses.filter(Status.status==2).count())
         row.append(product.operations.filter(Operation.operation_status_id==1).count())
         row.append(product.operations.filter(Operation.operation_status_id==2).count())
-        #row.append(product.id)
+        
         writer.writerow(row)
 
     output = make_response(buffer.getvalue())

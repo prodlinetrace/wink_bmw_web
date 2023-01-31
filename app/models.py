@@ -13,7 +13,7 @@ from sqlalchemy.sql.expression import func
 from . import db
 logger = logging.getLogger(__name__)
 
-__version__ = '0.1.12'
+__version__ = '0.1.13'
 
 try:
     from . import login_manager
@@ -240,6 +240,14 @@ class Product(db.Model):
 
         return end_time - start_time
 
+    @property
+    def dmc(self):
+        dmc = self.operations.filter(Operation.operation_type_id==501).first()
+        res = ""
+        if dmc is not None:
+            res = dmc.results.filter(Result.desc_id==50101).first().value
+
+        return res
 
 class Station(db.Model):
     __tablename__ = 'station'
